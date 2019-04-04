@@ -7,7 +7,6 @@ const app = express();
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
-const { Restaurant } = require('./models');
 
 const usersRouter = require('./usersRouter');
 //const eventsRouter = require('./eventsRouter');
@@ -15,8 +14,6 @@ const usersRouter = require('./usersRouter');
 
 app.use(express.static('public'));
 app.use(express.json());
-
-app.listen(process.env.PORT || 8080);
 
 // endpoints at users, events, products
 app.use('/users', usersRouter);

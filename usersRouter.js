@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 
-const User  = require("./models");
+const {User}  = require("./models");
 
 router.get('/', (req, res) => {
     console.log("something");
     User
-        .find({})
+        .findOne()
         .then(user => {
             console.log(user);
             res.json({
-            username: user[0].username,
-            id: user[0].id
+            username: user.username,
+            id: user.id
         })});
     //implement error catching
 });
@@ -26,7 +25,7 @@ router.post('/', (req, res) => {
             password: req.body.password,
             authority: req.body.authority
         })
-        .then(user => res.json);
+        .then(user => res.json(user));
 
 
     //id will be generated randomly and authority based on how user signs up in finished version

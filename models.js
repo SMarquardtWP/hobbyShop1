@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 const userSchema =  mongoose.Schema({
     id: {type: Number, required: true},
@@ -30,6 +31,4 @@ const User = mongoose.model('User', userSchema);
 const Product = mongoose.model('Product', productSchema);
 const Event = mongoose.model('Event', eventSchema);
 
-module.exports= User;
-module.exports= {Product};
-module.exports= {Event};
+module.exports= {User, Product, Event};
