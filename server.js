@@ -40,6 +40,7 @@ app.post('/users', (req, res) => {
             authority: req.body.authority
         });
 
+
     //id will be generated randomly and authority based on how user signs up in finished version
 });
 
