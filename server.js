@@ -9,40 +9,21 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 const { Restaurant } = require('./models');
 
+const usersRouter = require('./usersRouter');
+//const eventsRouter = require('./eventsRouter');
+//const productsRouter = require('productsRouter');
+
 app.use(express.static('public'));
 app.use(express.json());
 
 app.listen(process.env.PORT || 8080);
 
-module.exports = app;
-
 // endpoints at users, events, products
+app.use('/users', usersRouter);
+//app.use('/events', eventsRouter);
+//app.use('/products', productsRouter);
 
-const { User } = require("models");
-
-app.get('/users', (req, res) => {
-    User
-        .findOne()
-        .then(user => res.json({
-            username: user.username,
-            id: user.id
-        }));
-    //implement error catching
-});
-
-app.post('/users', (req, res) => {
-    // make sure to insert code forcing required fields to be entered
-    User
-        .create({
-            id: req.body.id,
-            username: req.body.username,
-            password: req.body.password,
-            authority: req.body.authority
-        });
-
-
-    //id will be generated randomly and authority based on how user signs up in finished version
-});
+let server;
 
 function runServer(databaseUrl, port = PORT) {
     return new Promise((resolve, reject) => {

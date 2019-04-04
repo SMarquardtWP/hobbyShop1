@@ -30,6 +30,6 @@ const User = mongoose.model('User', userSchema);
 const Product = mongoose.model('Product', productSchema);
 const Event = mongoose.model('Event', eventSchema);
 
-module.exports= {User};
+module.exports= User;
 module.exports= {Product};
 module.exports= {Event};
