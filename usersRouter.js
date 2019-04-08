@@ -56,4 +56,19 @@ router.put('/:id', (req,res) => {
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
+router.delete('/:id', (req, res) => {
+
+    User
+        .findByIdAndRemove(req.params.id)
+        .then(() => res.status(204).end())
+        .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
 module.exports = router;
+
+/*
+TO DO LIST
+-Add error catching.
+-Add unique username requirement
+-Add authority validation on delete/update requests
+*/ 
