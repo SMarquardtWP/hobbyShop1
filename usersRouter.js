@@ -1,7 +1,12 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
 const {User}  = require("./models");
+
+//router.use('/', jsonParser);
 
 router.get('/', (req, res) => {
     console.log("something");
@@ -11,7 +16,7 @@ router.get('/', (req, res) => {
             console.log(user);
             res.json({
             username: user.username,
-            id: user.id
+            userId: user.userId
         })});
     //implement error catching
 });
@@ -20,7 +25,7 @@ router.post('/', (req, res) => {
     // make sure to insert code forcing required fields to be entered
     User
         .create({
-            id: req.body.id,
+            userId: req.body.userId,
             username: req.body.username,
             password: req.body.password,
             authority: req.body.authority
@@ -35,6 +40,10 @@ router.put('/:id', (req,res) => {
     const updates = {};
     const updateableFields = ['username', 'password'];
     
+    console.log('We made it this far at least');
+    console.log(req.params);
+    console.log(req.body);
+
     updateableFields.forEach(field => {
         if (field in req.body) {
             updates[field] = req.body[field];
@@ -42,7 +51,9 @@ router.put('/:id', (req,res) => {
     });
 
     User
-        .findByIdAndUpdate(req.params.id, {} )
+        .findByIdAndUpdate(req.params.id, {$set: updates})
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 module.exports = router;

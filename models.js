@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const userSchema =  mongoose.Schema({
-    id: {type: Number, required: true},
+    userId: {type: Number, required: true},
     username: {type: String, required: true},
     password: {type: String, required:true},
     authority: {type: Number, required: true}
 });
 
 const productSchema = mongoose.Schema({
-    id: {type: Number, required: true},
+    productId: {type: Number, required: true},
     name: {type: String, required: true},
     genre: [{type: String}],
     tags: [{type: String}],
@@ -19,7 +19,7 @@ const productSchema = mongoose.Schema({
 });
 
 const eventSchema = mongoose.Schema({
-    id: {type: Number, required: true},
+    eventId: {type: Number, required: true},
     name: {type: String, required: true},
     date: {type: Date, required: true},
     free: {type: Boolean},
