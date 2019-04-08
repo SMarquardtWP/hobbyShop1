@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const app = express();
 
 mongoose.Promise = global.Promise;
@@ -9,16 +10,17 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 
 const usersRouter = require('./usersRouter');
-//const eventsRouter = require('./eventsRouter');
-//const productsRouter = require('productsRouter');
+const eventsRouter = require('./eventsRouter');
+const productsRouter = require('./productsRouter');
 
 app.use(express.static('public'));
 app.use(express.json());
 
+app.use(morgan('common'));
 // endpoints at users, events, products
 app.use('/users', usersRouter);
-//app.use('/events', eventsRouter);
-//app.use('/products', productsRouter);
+app.use('/events', eventsRouter);
+app.use('/products', productsRouter);
 
 let server;
 
