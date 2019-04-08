@@ -31,4 +31,18 @@ router.post('/', (req, res) => {
     //id will be generated randomly and authority based on how user signs up in finished version
 });
 
+router.put('/:id', (req,res) => {
+    const updates = {};
+    const updateableFields = ['username', 'password'];
+    
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            updates[field] = req.body[field];
+        }
+    });
+
+    User
+        .findByIdAndUpdate(req.params.id, {} )
+});
+
 module.exports = router;
