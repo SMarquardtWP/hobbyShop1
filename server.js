@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const app = express();
 const bodyParser = require('body-parser');
+const passport = require('passport');
+
 
 mongoose.Promise = global.Promise;
 
@@ -13,8 +15,15 @@ const { PORT, DATABASE_URL } = require('./config');
 const usersRouter = require('./usersRouter');
 const eventsRouter = require('./eventsRouter');
 const productsRouter = require('./productsRouter');
+//const authRouter = require('./auth/router');
+
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 const jsonParser = bodyParser.json();
+
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -24,6 +33,7 @@ app.use(morgan('common'));
 app.use('/users', usersRouter);
 app.use('/events', eventsRouter);
 app.use('/products', productsRouter);
+app.use('/auth', authRouter);
 
 let server;
 
