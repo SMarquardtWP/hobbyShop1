@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">    
-        <title></title>
-    </head>
 
-    <body>
-        <header>Game INC</header>
-        <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities. Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title></title>
+</head>
+
+<body>
+    <header>Game INC</header>
+    <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities.
+        Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
+
+    <form class="login">
+        <fieldset>
+            <legend>Login</legend>
+            <label for="username">Username: </label>
+            <input type="text" class= "username" name="username" placeholder="username"><br>
+            <label for="password">Password: </label>
+            <input type="text" class= "password" name="password" placeholder="password"><br>
+            <input type="submit" value="Login">
+        </fieldset>
+    </form>
 
     <ul>
-        <li>Home</li>
-        <li>Products</li>
-        <li>Events</li>
-        <li>Contact Us</li>
+        <li><a href="https://gamesINC.com/">Home</a></li>
+        <li><a href="https://gamesINC.com/products">Products</a></li>
+        <li><a href="https://gamesINC.com/events">Events</a></li>
+        <li><a href="https://gamesINC.com/contact">Contact Us</a></li>
     </ul>
-</html>
 
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
