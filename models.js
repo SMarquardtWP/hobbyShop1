@@ -24,7 +24,8 @@ const eventSchema = mongoose.Schema({
     date: {type: Date, required: true},
     free: {type: Boolean},
     maxAttend: {type: Number},
-    attend: {type: Number}
+    attend: [{type: String}]
+
 });
 
 const User = mongoose.model('User', userSchema);

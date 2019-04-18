@@ -8,6 +8,7 @@ const {Event}  = require("./models");
 
 //router.use('/', jsonParser);
 
+//for general members to view event information
 router.get('/', (req, res) => {
     console.log("something");
     Event
@@ -31,7 +32,7 @@ router.post('/', (req, res) => {
         .create({
             eventId:req.body.eventId,
             name: req.body.name,
-            date: req.body.date,
+            date: new Date(req.body.date),
             free: req.body.free,
             maxAttend: req.body.maxAttend,
             attend: req.body.attend
@@ -42,13 +43,27 @@ router.post('/', (req, res) => {
     //id will be generated sequentially
 });
 
+//for member level users to subscribe to events
 router.put('/:id', (req,res) => {
     const updates = {};
-    const updateableFields = ['name', 'genre', 'tags', 'price'];
-    
-    console.log('We made it this far at least');
-    console.log(req.params);
-    console.log(req.body);
+    const updateableFields = ['name', 'date', 'free', 'maxAttend', 'attend'];
+
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            updates[field] = req.body[field];
+        }
+    });
+
+    Event
+        .findByIdAndUpdate(req.params.id, {$set: updates})
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+//for clerk+ users to manage event information
+router.put('/clerk/:id', (req,res) => {
+    const updates = {};
+    const updateableFields = ['name', 'date', 'free', 'maxAttend', 'attend'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

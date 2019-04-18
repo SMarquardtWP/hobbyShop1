@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const app = express();
+const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
 
@@ -12,6 +13,8 @@ const { PORT, DATABASE_URL } = require('./config');
 const usersRouter = require('./usersRouter');
 const eventsRouter = require('./eventsRouter');
 const productsRouter = require('./productsRouter');
+
+const jsonParser = bodyParser.json();
 
 app.use(express.static('public'));
 app.use(express.json());

@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
-const {User}  = require("./models");
+const { User } = require("./models");
 
 //router.use('/', jsonParser);
 
@@ -15,9 +15,10 @@ router.get('/', (req, res) => {
         .then(user => {
             console.log(user);
             res.json({
-            username: user.username,
-            userId: user.userId
-        })});
+                username: user.username,
+                userId: user.userId
+            })
+        });
     //implement error catching
 });
 
@@ -36,13 +37,10 @@ router.post('/', (req, res) => {
     //id will be generated randomly and authority based on how user signs up in finished version
 });
 
-router.put('/:id', (req,res) => {
+//primarily for users to update own password
+router.put('/:id', (req, res) => {
     const updates = {};
     const updateableFields = ['username', 'password'];
-    
-    console.log('We made it this far at least');
-    console.log(req.params);
-    console.log(req.body);
 
     updateableFields.forEach(field => {
         if (field in req.body) {
@@ -51,17 +49,35 @@ router.put('/:id', (req,res) => {
     });
 
     User
-        .findByIdAndUpdate(req.params.id, {$set: updates})
+        .findByIdAndUpdate(req.params.id, { $set: updates })
         .then(user => res.status(204).end())
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
-router.delete('/:id', (req, res) => {
+//for admin authority users to manage other users
+router.put('/admin/:id', (req, res) => {
+    const updates = {};
+    const updateableFields = ['username', 'password'];
+
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            updates[field] = req.body[field];
+        }
+    });
+
+    User
+        .findByIdAndUpdate(req.params.id, { $set: updates })
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+
+router.delete('/admin/:id', (req, res) => {
 
     User
         .findByIdAndRemove(req.params.id)
         .then(() => res.status(204).end())
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
 module.exports = router;
@@ -71,4 +87,4 @@ TO DO LIST
 -Add error catching.
 -Add unique username requirement
 -Add authority validation on delete/update requests
-*/ 
+*/

@@ -42,10 +42,6 @@ router.post('/', (req, res) => {
 router.put('/:id', (req,res) => {
     const updates = {};
     const updateableFields = ['name', 'genre', 'tags', 'price'];
-    
-    console.log('We made it this far at least');
-    console.log(req.params);
-    console.log(req.body);
 
     updateableFields.forEach(field => {
         if (field in req.body) {
