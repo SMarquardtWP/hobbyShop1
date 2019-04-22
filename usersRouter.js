@@ -3,38 +3,39 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const { User } = require("./models");
+const jwtauth = passport.authenticate('jwt', { session: false });
 
-//router.use('/', jsonParser);
+router.use('/', bodyParser);
 
-router.get('/', (req, res) => {
-    console.log("something");
+router.get('/', jwtauth, (req, res) => {
+    console.log(req.user);
     User
-        .findOne()
-        .then(user => {
-            console.log(user);
-            res.json({
-                username: user.username,
-                userId: user.userId
-            })
+        .find()
+        .then(users => {
+            console.log(users);
+            res.json(users.map(usr => usr.serialize()));
         });
     //implement error catching
 });
 
 router.post('/', (req, res) => {
     // make sure to insert code forcing required fields to be entered
-    User
-        .create({
-            userId: req.body.userId,
-            username: req.body.username,
-            password: req.body.password,
-            authority: req.body.authority
-        })
-        .then(user => res.json(user));
 
-
-    //id will be generated randomly and authority based on how user signs up in finished version
+    //TODO: check for same named user
+    User.hashPassword(req.body.password)
+        .then(hashed => {
+            User
+                .create({
+                    username: req.body.username,
+                    password: hashed,
+                    email: req.body.email,
+                    authority: 1
+                })
+                .then(user => res.json(user.serialize));
+        });
 });
 
 //primarily for users to update own password
@@ -57,7 +58,7 @@ router.put('/:id', (req, res) => {
 //for admin authority users to manage other users
 router.put('/admin/:id', (req, res) => {
     const updates = {};
-    const updateableFields = ['username', 'password'];
+    const updateableFields = ['username', 'password', 'email', 'authority'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

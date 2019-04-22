@@ -3,7 +3,9 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
+const jwtauth = passport.authenticate('jwt', { session: false });
 const {Product}  = require("./models");
 
 //router.use('/', jsonParser);
@@ -23,7 +25,7 @@ router.get('/', (req, res) => {
     //implement error catching
 });
 
-router.post('/', (req, res) => {
+router.post('/', jwtauth, (req, res) => {
     // make sure to insert code forcing required fields to be entered
     Product
         .create({
@@ -39,7 +41,7 @@ router.post('/', (req, res) => {
     //id will be generated sequentially
 });
 
-router.put('/:id', (req,res) => {
+router.put('/:id', jwtauth, (req,res) => {
     const updates = {};
     const updateableFields = ['name', 'genre', 'tags', 'price'];
 
@@ -55,7 +57,7 @@ router.put('/:id', (req,res) => {
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', jwtauth, (req, res) => {
 
     Product
         .findByIdAndRemove(req.params.id)

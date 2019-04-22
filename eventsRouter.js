@@ -3,8 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const {Event}  = require("./models");
+const jwtauth = passport.authenticate('jwt', { session: false });
 
 //router.use('/', jsonParser);
 
@@ -26,7 +28,8 @@ router.get('/', (req, res) => {
     //implement error catching
 });
 
-router.post('/', (req, res) => {
+//for clerk+ level users to update event posting
+router.post('/', jwtauth, (req, res) => {
     // make sure to insert code forcing required fields to be entered
     Event
         .create({
@@ -44,7 +47,7 @@ router.post('/', (req, res) => {
 });
 
 //for member level users to subscribe to events
-router.put('/:id', (req,res) => {
+router.put('/:id', jwtauth, (req,res) => {
     const updates = {};
     const updateableFields = ['name', 'date', 'free', 'maxAttend', 'attend'];
 
@@ -60,8 +63,8 @@ router.put('/:id', (req,res) => {
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-//for clerk+ users to manage event information
-router.put('/clerk/:id', (req,res) => {
+//for clerk+ level users to manage event information
+router.put('/clerk/:id', jwtauth, (req,res) => {
     const updates = {};
     const updateableFields = ['name', 'date', 'free', 'maxAttend', 'attend'];
 
@@ -77,7 +80,8 @@ router.put('/clerk/:id', (req,res) => {
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.delete('/:id', (req, res) => {
+//for clerk+ level users to remove events from list
+router.delete('/:id', jwtauth, (req, res) => {
 
     Event
         .findByIdAndRemove(req.params.id)

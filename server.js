@@ -15,12 +15,9 @@ const { PORT, DATABASE_URL } = require('./config');
 const usersRouter = require('./usersRouter');
 const eventsRouter = require('./eventsRouter');
 const productsRouter = require('./productsRouter');
-//const authRouter = require('./auth/router');
-
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 const jsonParser = bodyParser.json();
-
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
