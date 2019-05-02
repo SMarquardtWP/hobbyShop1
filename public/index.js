@@ -54,7 +54,7 @@ function watchLogin(){
         }
 
         baseCall(url, 'POST', successLogin, errorLogin, false, bodySettings);
-    })
+    });
 }
 
 watchLogin();

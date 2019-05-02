@@ -40,6 +40,7 @@ function displayProducts(productsJson){
     for (let i = 0; i<productsJson.length; i++){
         let genre = productsJson[i].genre;
         let tags = productsJson[i].tags;
+
         $('.productListing').append(`
         <p>Name: ${productsJson[i].name}</p>
         <p>Genres: ${genre.toString()}</p>
@@ -49,15 +50,17 @@ function displayProducts(productsJson){
     };
 }
 
-//<p>Name: ${productsJson[i].name}</p><p>Genres: ${genre.toString()}</p><p>Tags:  ${tags.toString()}</p><p>Price: ${productsJson[i].price}</p><img src = "${productsJson[i].thumbnail}" alt = "Image of game">
-
-function getProducts() {
-    let url = './../products';
-    baseCall(url, 'GET', displayProducts, errorGetProducts, false);
+function getProducts(queries) {
+    console.log('You are in the getProducts');
+    let reqUrl = './../products/';
+    if (queries)
+    reqUrl = reqUrl.concat(queries);
+    console.log(reqUrl);
+    baseCall(reqUrl, 'GET', displayProducts, errorGetProducts, false);
 }
 
 function errorGetProducts(err){
-    console.log('err');
+    console.log(err);
 }
 
 /* function postProduct() {
@@ -79,4 +82,28 @@ function errorGetProducts(err){
     baseCall(url, 'POST', createSuccess, errorPostProducts, false, bodySettings);
 }*/
 
-getProducts();
+function watchSearch(){
+    console.log('watchSearch is listening');
+    $('.search').on('submit', function(event){
+        event.preventDefault();
+            console.log('You submitted the form');
+        $('.productListing').empty();
+            console.log('You are in the watchSearch');
+        let name= $('input[name="nameQuery"]').val();
+            console.log(name);
+        let genre= $('input[name="genreQuery"]').val();
+            console.log(genre);
+        let tags= $('input[name="tagsQuery"]').val();
+            console.log(tags);
+        let queries= `?name=${name}&genre=${genre}&tags=${tags}`;
+            console.log(queries);
+        getProducts(queries);
+    });
+}
+
+function runProductsPage(){
+    watchSearch();
+    getProducts();
+}
+
+runProductsPage();

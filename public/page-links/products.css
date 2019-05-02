@@ -1,0 +1,11 @@
+/*Products Stylesheet*/
+
+img{
+    background-size: cover;
+    border-radius: 15px;
+    width: 20%;
+}
+
+body{
+    background-color: aqua;
+}

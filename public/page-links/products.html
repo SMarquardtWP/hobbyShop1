@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-            <script src="https://code.jquery.com/jquery-3.4.0.js"
-        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
-            <script src="./products.js"></script>    
-        <title></title>
-    </head>
 
-    <body>
-        <header>Game INC</header>
-        <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities. Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="./../index.css">
+    <link rel="stylesheet" href="products.css">
+
+    <title></title>
+</head>
+
+<body>
+    <header>
+        <img src='./../images/hobbyShopIcon.jpg' alt="A black and white logo of a crown and armor wearing woman.">
+    </header>
 
     <h2>Products</h2>
 
+    <form class='search'>
+        <fieldset>
+            <legend>Search Our Products!</legend>
+            <label for="nameQuery">Name: </label>
+            <input type='text' name='nameQuery' placeholder='Search By Name'>
+            <label for="genreQuery">Genre: </label>
+            <input type='text' name='genreQuery' placeholder='Search By Genre'>
+            <label for="tagsQuery">Tags: </label>
+            <input type='text' name='tagsQuery' placeholder='Search By Tags'>
+            <input type='submit' value='Search'>
+        </fieldset>
+    </form>
+
     <ul>
-        <li>Home</li>
-        <li>Products</li>
-        <li>Events</li>
-        <li>Contact Us</li>
+        <li><a href="./../index.html">Home</a></li>
+        <li><a href="./events.html">Events</a></li>
+        <li><a href="./contact.html">Contact Us</a></li>
     </ul>
 
-    <div class = "productListing">
-        
+    <div class="productListing">
+
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="./products.js"></script>
+</body>
+
 </html>
