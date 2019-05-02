@@ -10,18 +10,29 @@ const {Product}  = require("./models");
 
 //router.use('/', jsonParser);
 
-router.get('/', (req, res) => {
-    console.log("something");
+router.get('/', (req, res, query) => {
+    let options = {
+        "limit": 0, //req.query.limit,
+        "skip": 10, //req.query.skip,
+        "sort": "name"//req.query.sort
+    }
+
     Product
-        .findOne()
-        .then(product => {
-            console.log(product);
+        .find().limit(2).sort('name')
+        .then(products => {
+            console.log(products);
+            res.json(products);
+            
+            
+            /*
             res.json({
             name: product.name,
             genre: product.genre,
             tags: product.tags,
-            price: product.price
-        })});
+            price: product.price,
+            thumbnail: product.thumbnail
+            })*/
+    });
     //implement error catching
 });
 
@@ -29,11 +40,11 @@ router.post('/', jwtauth, (req, res) => {
     // make sure to insert code forcing required fields to be entered
     Product
         .create({
-            productId: req.body.productId,
             name: req.body.name,
             genre: req.body.genre,
             tags: req.body.tags,
-            price: req.body.price
+            price: req.body.price,
+            thumbnail: req.body.thumbnail
         })
         .then(product => res.json(product));
 

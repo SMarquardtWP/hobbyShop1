@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
 userSchema.methods.serialize = function () {
     return {
         username: this.username || '',
-        email: this.email || '',
+        email: this.email || ''
     };
 };
 
@@ -29,7 +29,6 @@ userSchema.statics.hashPassword = function (password) {
 
 //PRODUCT SCHEMA
 const productSchema = mongoose.Schema({
-    productId: { type: Number, required: true },
     name: { type: String, required: true },
     genre: [{ type: String }],
     tags: [{ type: String }],
@@ -40,7 +39,6 @@ const productSchema = mongoose.Schema({
 
 //EVENT SCHEMA
 const eventSchema = mongoose.Schema({
-    eventId: { type: Number, required: true },
     name: { type: String, required: true },
     date: { type: Date, required: true },
     free: { type: Boolean },

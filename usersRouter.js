@@ -31,6 +31,8 @@ router.post('/', (req, res) => {
                 .create({
                     username: req.body.username,
                     password: hashed,
+
+                    
                     email: req.body.email,
                     authority: 1
                 })

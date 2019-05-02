@@ -2,41 +2,60 @@
 
 const BASE_URL = "DUMMY";
 
-function loginSubmit(username, password) {
-    let login_url = "./auth/login";
-    let SETTINGS = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: {
-            "username": username,
-            "password": password
+function baseCall(url, mthd, successCallback, errorCallback, auth, body){
+    //sets up settings for call
+    let settings = {
+        method : mthd,
+        headers : {
+            'Content-Type' : 'application/json'
         }
-    };
-    console.log(login_url + JSON.stringify(SETTINGS));
-    fetch(login_url, SETTINGS)
+    }
+    if (body){
+        settings.body = JSON.stringify(body);
+    }
+    if (auth){
+        token = localStorage.getItem('token');
+        settings.headers.Authorization = 'Bearer ' + token;
+    }
+
+    //makes fetch call
+    fetch(url, settings)
         .then(response => {
-            if (response.ok) {
-                console.log(response);
+            if(response.ok){
                 return response.json();
             }
             throw new Error(response.statusText);
         })
-        .then(responseJson => {
-            $(".loginResponse").html(`You have logged in successfully`);
-            localStorage.setItem(responseJson);
-        })
+        .then(responseJson => successCallback(responseJson))
+        .catch(err => {
+            errorCallback(err);
+        });
 }
 
-function watchForm() {
-    $(".login").on("submit", event => {
+function successLogin(responseJSON){
+    $(".loginResponse").html(`You have logged in successfully`);
+    localStorage.setItem("token", responseJSON.authToken);
+}
+
+function errorLogin(err){
+    console.log(err);
+}
+
+function watchLogin(){
+    $('.login').on('submit', function(event){
         event.preventDefault();
-        let username = $(".username").val();
-        let password = $(".password").val();
-        console.log(username + password);
-        loginSubmit(username, password);
-    });
+        let user = $('.username').val();
+        let pass = $('.password').val();
+        let url = './auth/login';
+
+        let bodySettings = {
+            username : user,
+            password : pass
+        }
+
+        baseCall(url, 'POST', successLogin, errorLogin, false, bodySettings);
+    })
 }
 
-watchForm();
+watchLogin();
+watchLinks();
