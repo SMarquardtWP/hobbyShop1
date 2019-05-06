@@ -31,19 +31,16 @@ function baseCall(url, mthd, successCallback, errorCallback, auth, body) {
 }
 
 /*name: { type: String, required: true },
-genre: [{ type: String }],
 tags: [{ type: String }],
 price: { type: Number },
 thumbnail: {type: String}*/
 
 function displayProducts(productsJson){
     for (let i = 0; i<productsJson.length; i++){
-        let genre = productsJson[i].genre;
         let tags = productsJson[i].tags;
 
         $('.productListing').append(`
         <p>Name: ${productsJson[i].name}</p>
-        <p>Genres: ${genre.toString()}</p>
         <p>Tags:  ${tags.toString()}</p>
         <p>Price: ${productsJson[i].price}</p>
         <img src = "${productsJson[i].thumbnail}" alt = "Image of game">`)
@@ -65,15 +62,13 @@ function errorGetProducts(err){
 
 /* function postProduct() {
     let url = './products';
-    let nme = 
-    let gnre = 
+    let nme =  
     let tags =
     let price =
     let thumbnail =
 
     let bodySettings = {
         name: nme,
-        genre: gnre,
         tags: tgs,
         price: prce,
         thumbnail: imglink
@@ -82,6 +77,8 @@ function errorGetProducts(err){
     baseCall(url, 'POST', createSuccess, errorPostProducts, false, bodySettings);
 }*/
 
+
+// fix code for cases where some queries are blank
 function watchSearch(){
     console.log('watchSearch is listening');
     $('.search').on('submit', function(event){
@@ -91,11 +88,9 @@ function watchSearch(){
             console.log('You are in the watchSearch');
         let name= $('input[name="nameQuery"]').val();
             console.log(name);
-        let genre= $('input[name="genreQuery"]').val();
-            console.log(genre);
         let tags= $('input[name="tagsQuery"]').val();
             console.log(tags);
-        let queries= `?name=${name}&genre=${genre}&tags=${tags}`;
+        let queries= `?name=${name}&tags=${tags}`;
             console.log(queries);
         getProducts(queries);
     });

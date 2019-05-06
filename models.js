@@ -30,7 +30,6 @@ userSchema.statics.hashPassword = function (password) {
 //PRODUCT SCHEMA
 const productSchema = mongoose.Schema({
     name: { type: String, required: true },
-    genre: [{ type: String }],
     tags: [{ type: String }],
     price: { type: Number },
     thumbnail: {type: String}

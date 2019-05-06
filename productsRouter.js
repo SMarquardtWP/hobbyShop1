@@ -11,6 +11,7 @@ const { Product } = require("./models");
 //router.use('/', jsonParser);
 
 router.get('/', (req, res) => {
+    console.log(req.query);
     Product
         .find(req.query)
         .limit(10)
@@ -18,17 +19,10 @@ router.get('/', (req, res) => {
         .then(products => {
             console.log(products);
             res.json(products);
-
-
-            /*
-            res.json({
-            name: product.name,
-            genre: product.genre,
-            tags: product.tags,
-            price: product.price,
-            thumbnail: product.thumbnail
-            });*/
-        });
+        })
+        .catch(err => {
+            res.status(500).json({message:"Error, something went wrong"});
+        })
     //implement error catching
 });
 
@@ -37,7 +31,6 @@ router.post('/', jwtauth, (req, res) => {
     Product
         .create({
             name: req.body.name,
-            genre: req.body.genre,
             tags: req.body.tags,
             price: req.body.price,
             thumbnail: req.body.thumbnail
@@ -50,7 +43,7 @@ router.post('/', jwtauth, (req, res) => {
 
 router.put('/:id', jwtauth, (req, res) => {
     const updates = {};
-    const updateableFields = ['name', 'genre', 'tags', 'price'];
+    const updateableFields = ['name', 'tags', 'price'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
