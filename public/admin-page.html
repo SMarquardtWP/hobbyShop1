@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Game INC Admin Page</title>
+    <link rel="stylesheet" href="./stylesheets/index.css">
+</head>
+
+<body>
+    <div class='searchTools'></div>
+    <form class='userSearch'>
+        <fieldset>
+            <legend>Users</legend>
+            <label for="nameQuery">Name: </label>
+            <input type='text' name='nameQuery' placeholder='Search By Name'>
+            <label for="emailQuery">Email: </label>
+            <input type='text' name='emailQuery' placeholder='Search By Email'>
+            <label for="authQuery">Auth Level: </label>
+            <input type='text' name='authQuery' placeholder='Search By Authority'>
+            <input type='submit' value='Search'>
+        </fieldset>
+    </form>
+
+    <form class='productSearch'>
+        <fieldset>
+            <legend>Products</legend>
+            <label for="nameQuery">Name: </label>
+            <input type='text' name='nameQuery' placeholder='Search By Name'>
+            <label for="tagsQuery">Tags: </label>
+            <input type='text' name='tagsQuery' placeholder='Search By Tags'>
+            <input type='submit' value='Search'>
+        </fieldset>
+    </form>
+
+    <form class='eventSearch'>
+        <fieldset>
+            <label for="nameQuery">Name: </label>
+            <input type='text' name='nameQuery' placeholder='Search By Name'>
+            <input type='submit' value='Search'>
+        </fieldset>
+    </form>
+
+    <div class='results'></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="./scripts/admin-page.js"></script>
+</body>
+
+</html>

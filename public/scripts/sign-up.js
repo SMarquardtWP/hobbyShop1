@@ -1,11 +1,11 @@
 'use strict';
 
-function submitSignup(user, pass, conf) {
+function submitSignup(user, email, pass) {
     //sets up settings for call
-    let userData = {"username": user, "password": pass};
+    let userData = {"username": user, "email": email, "password": pass};
 
     let settings = {
-        method: POST,
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -13,7 +13,7 @@ function submitSignup(user, pass, conf) {
     };
 
     //makes fetch call
-    fetch('./users', settings)
+    fetch('./../users', settings)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -26,23 +26,35 @@ function submitSignup(user, pass, conf) {
         });
 }
 
-function successSignup()
+function successSignup(user){
+    console.log('That was a successful signup.');
+    $('.signUpMessage').html(`<p>Signup successful. Redirecting to home page.`);
+    console.log(user);
+    setTimeout(function() {
+        location.replace("./../index.html");
+    });
+}
 
-function invalidInputCheck(user, pass, conf) {
+function invalidInputCheck(user, email, pass, conf) {
     console.log('Checking for validity');
     console.log(user);
     if (user == "") {
-        $('.signUpError').html(`<p>Please enter a username.</p>`);
+        $('.signUpMessage').html(`<p>Please enter a username.</p>`);
+        return false;
+    }
+    console.log(email);
+    if (email == "") {
+        $('.signUpMessage').html(`<p>Please enter a valid email.</p>`);
         return false;
     }
     console.log(pass);
     if (pass == "") {
-        $('.signUpError').html(`<p>Please enter a password.</p>`);
+        $('.signUpMessage').html(`<p>Please enter a password.</p>`);
         return false;
     }
     console.log(conf);
     if (pass !== conf) {
-        $('.signUpError').html(`<p>Please make sure both passwords match.</p>`);
+        $('.signUpMessage').html(`<p>Please make sure both passwords match.</p>`);
         return false;
     }
 
@@ -54,10 +66,13 @@ function watchForm() {
     $('form').on('submit', function (event) {
         event.preventDefault();
         let username = $('#username').val();
+        let email = $('#email').val()
         let password = $('#password').val();
         let passConf = $('#passConf').val();
-        if (invalidInputCheck(username, password, passConf) === true)
-            submitSignup(username, password, passConf)
+        if ( invalidInputCheck(username, email, password, passConf) === true){
+            console.log('Made it ouf of invalid check');
+            submitSignup(username, email, password);
+        }
     });
 }
 

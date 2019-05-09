@@ -8,7 +8,9 @@ const passport = require('passport');
 const { User } = require("./models");
 const jwtauth = passport.authenticate('jwt', { session: false });
 
-router.use('/', bodyParser);
+router.use("/", bodyParser.urlencoded({
+    extended: true
+}));
 
 router.get('/', jwtauth, (req, res) => {
     console.log(req.user);
@@ -23,20 +25,22 @@ router.get('/', jwtauth, (req, res) => {
 
 router.post('/', (req, res) => {
     // make sure to insert code forcing required fields to be entered
-
+    console.log(req.body);
     //TODO: check for same named user
     User.hashPassword(req.body.password)
         .then(hashed => {
+            console.log(hashed);
             User
                 .create({
                     username: req.body.username,
                     password: hashed,
-
                     
                     email: req.body.email,
                     authority: 1
                 })
-                .then(user => res.json(user.serialize));
+                .then(user => {
+                    console.log(user);
+                    res.json(user.serialize())});
         });
 });
 
@@ -76,7 +80,6 @@ router.put('/admin/:id', (req, res) => {
 
 
 router.delete('/admin/:id', (req, res) => {
-
     User
         .findByIdAndRemove(req.params.id)
         .then(() => res.status(204).end())

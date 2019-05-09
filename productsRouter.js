@@ -8,7 +8,9 @@ const passport = require('passport');
 const jwtauth = passport.authenticate('jwt', { session: false });
 const { Product } = require("./models");
 
-//router.use('/', jsonParser);
+router.use("/", bodyParser.urlencoded({
+    extended: true
+}));
 
 router.get('/', (req, res) => {
     console.log(req.query);
