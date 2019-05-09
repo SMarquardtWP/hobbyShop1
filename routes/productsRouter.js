@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const jwtauth = passport.authenticate('jwt', { session: false });
-const { Product } = require("./models");
+const { Product } = require("../models");
 
 router.use("/", bodyParser.urlencoded({
     extended: true

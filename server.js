@@ -12,9 +12,9 @@ mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
 
-const usersRouter = require('./usersRouter');
-const eventsRouter = require('./eventsRouter');
-const productsRouter = require('./productsRouter');
+const usersRouter = require('./routes/usersRouter');
+const eventsRouter = require('./routes/eventsRouter');
+const productsRouter = require('./routes/productsRouter');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 const jsonParser = bodyParser.json();

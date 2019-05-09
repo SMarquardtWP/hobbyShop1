@@ -49,7 +49,7 @@ function displayProducts(productsJson){
 
 function getProducts(queries) {
     console.log('You are in the getProducts');
-    let reqUrl = './../products/';
+    let reqUrl = './products';
     if (queries)
     reqUrl = reqUrl.concat(queries);
     console.log(reqUrl);
@@ -86,12 +86,20 @@ function watchSearch(){
             console.log('You submitted the form');
         $('.productListing').empty();
             console.log('You are in the watchSearch');
-        let name= $('input[name="nameQuery"]').val();
+        let queries='?';
+
+        let name= $('input[name="pname"]').val();
             console.log(name);
-        let tags= $('input[name="tagsQuery"]').val();
+        let tags= $('input[name="tags"]').val();
             console.log(tags);
-        let queries= `?name=${name}&tags=${tags}`;
-            console.log(queries);
+
+        if (name !== "")
+            queries += `name=${name}&`;
+
+        if (tags !== "")
+            queries += `tags=${tags}&`;
+
+        console.log('Queries are '+ queries);
         getProducts(queries);
     });
 }

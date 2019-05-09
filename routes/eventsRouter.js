@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const { Event } = require("./models");
+const { Event } = require("../models");
 const jwtauth = passport.authenticate('jwt', { session: false });
 
 router.use("/", bodyParser.urlencoded({
