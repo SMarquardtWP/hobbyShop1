@@ -65,6 +65,7 @@ function invalidInputCheck(user, email, pass, conf) {
 function watchForm() {
     $('form').on('submit', function (event) {
         event.preventDefault();
+        console.log('Watching for signup');
         let username = $('#username').val();
         let email = $('#email').val()
         let password = $('#password').val();

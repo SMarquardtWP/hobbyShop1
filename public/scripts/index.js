@@ -58,4 +58,3 @@ function watchLogin(){
 }
 
 watchLogin();
-watchLinks();

@@ -99,6 +99,7 @@ function watchSearch(){
         if (tags !== "")
             queries += `tags=${tags}&`;
 
+
         console.log('Queries are '+ queries);
         getProducts(queries);
     });

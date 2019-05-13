@@ -45,7 +45,7 @@ router.post('/', jwtauth, (req, res) => {
 
 router.put('/:id', jwtauth, (req, res) => {
     const updates = {};
-    const updateableFields = ['name', 'tags', 'price'];
+    const updateableFields = ['name', 'tags', 'price', 'thumbnail'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

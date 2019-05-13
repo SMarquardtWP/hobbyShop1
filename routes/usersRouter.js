@@ -14,12 +14,16 @@ router.use("/", bodyParser.urlencoded({
 
 router.get('/', jwtauth, (req, res) => {
     console.log(req.user);
+    console.log(req.query);
     User
-        .find()
+        .find(req.query)
         .then(users => {
             console.log(users);
             res.json(users.map(usr => usr.serialize()));
-        });
+        })
+        .catch(err => {
+            console.error(err);
+        })
     //implement error catching
 });
 

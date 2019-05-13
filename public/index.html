@@ -10,37 +10,38 @@
 
 <body>
     <header>
-        <h1>Game INC</h1>
-        <img src='./../images/hobbyShopIcon.jpg' alt="A black and white logo of a crown and armor wearing woman.">
+        <h1>Game <img src='./../images/hobbyShopIcon.jpg'
+                alt="A black and white logo of a crown and armor wearing woman."> INC</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./products.html">Products</a></li>
+                <li><a href="./events.html">Events</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
     </header>
-    <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities. 
+
+    <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities.
         Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
 
     <form class="login">
         <fieldset>
             <legend>Login</legend>
             <label for="username">Username: </label>
-            <input type="text" id= "username" name="username"  placeholder="username"><br>
+            <input type="text" id="username" name="username" placeholder="username"><br>
             <label for="password">Password: </label>
-            <input type="text" id= "password" name="password"  placeholder="password"><br>
+            <input type="text" id="password" name="password" placeholder="password"><br>
             <input type="submit" value="Login">
         </fieldset>
         <p class="loginResponse"></p>
     </form>
 
-    <ul>
 
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./products.html">Products</a></li>
-        <li><a href="./events.html">Events</a></li>
-        <li><a href="./contact.html">Contact Us</a></li>
-
-
-    </ul>
 
     <script src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
-    <script src="./index.js"></script>
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>
