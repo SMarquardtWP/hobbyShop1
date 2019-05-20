@@ -244,7 +244,8 @@ function displayEvents(eventsJson) {
 /*------------------------INITIALIZATION----------------*/
 
 function watchButtons() {
-    $('.newChoice').on(click, function (event) {
+    $('.newChoice').on('click', function (event) {
+        event.preventDefault();
         if (event.currentTarget.value == 'User')
             $('.blankFields').html(`
                 <label for=userName>Name: </label>
@@ -297,3 +298,6 @@ function watchForms() {
 }
 
 watchForms();
+
+
+//Data tables jquery plugin enables pagination. 
