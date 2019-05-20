@@ -14,23 +14,26 @@ router.use("/", bodyParser.urlencoded({
 
 //for general members to view event information
 router.get('/', (req, res) => {
-    console.log("something");
+    let search = {};
+
+    if (req.query.name)
+        search.name = {$regex: req.query.name, $options:"i" };
+
+    console.log(search);
     Event
-        .findOne()
+        .find(search)
+        .limit(10)
+        .sort('date')
         .then(event => {
             console.log(event);
-            res.json({
-                name: event.name,
-                date: event.date,
-                price: event.price,
-                maxAttend: event.maxAttend,
-                attend: event.attend
-            })
-        });
+            res.json(event);
+        })
+        .catch(err => {
+            res.status(500).json({message:"Error, something went wrong"});
+        })
     //implement error catching
 });
 
-//for clerk+ level users to update event posting
 router.post('/', jwtauth, (req, res) => {
     // make sure to insert code forcing required fields to be entered
     Event
@@ -39,7 +42,8 @@ router.post('/', jwtauth, (req, res) => {
             date: new Date(req.body.date),
             price: req.body.price,
             maxAttend: req.body.maxAttend,
-            attend: req.body.attend
+            attend: req.body.attend,
+            thumbnail: req.body.thumbnail
         })
         .then(event => res.json(event));
 

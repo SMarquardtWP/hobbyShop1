@@ -15,8 +15,19 @@ router.use("/", bodyParser.urlencoded({
 router.get('/', jwtauth, (req, res) => {
     console.log(req.user);
     console.log(req.query);
+    let search = {};
+
+    if (req.query.username)
+        search.username = {$regex: req.query.username, $options:"i" };
+    if (req.query.email)
+        search.email = { $regex: req.query.email, $options:"i" };
+    if (req.query.auth)
+        search.auth = { $regex: req.query.auth, $options:"i" };
+
+    console.log(search);
+
     User
-        .find(req.query)
+        .find(search)
         .then(users => {
             console.log(users);
             res.json(users.map(usr => usr.serialize()));
@@ -38,13 +49,14 @@ router.post('/', (req, res) => {
                 .create({
                     username: req.body.username,
                     password: hashed,
-                    
+
                     email: req.body.email,
                     authority: 1
                 })
                 .then(user => {
                     console.log(user);
-                    res.json(user.serialize())});
+                    res.json(user.serialize())
+                });
         });
 });
 

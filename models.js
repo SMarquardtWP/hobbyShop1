@@ -41,7 +41,7 @@ const productSchema = mongoose.Schema({
 const eventSchema = mongoose.Schema({
     name: { type: String, required: true },
     date: { type: Date, required: true },
-    free: { type: Boolean },
+    price: { type: Number, required: true },
     maxAttend: { type: Number },
     attend: [{ type: String }],
     thumbnail: {type: String}

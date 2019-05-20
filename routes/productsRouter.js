@@ -14,8 +14,17 @@ router.use("/", bodyParser.urlencoded({
 
 router.get('/', (req, res) => {
     console.log(req.query);
+    let search = {};
+
+    if (req.query.name)
+        search.name = {$regex: req.query.name, $options:"i" };
+    if (req.query.tags)
+        search.tags = { $regex: req.query.tags, $options:"i" };
+
+    console.log(search);
+
     Product
-        .find(req.query)
+        .find(search)
         .limit(10)
         .sort('name')
         .then(products => {
@@ -47,6 +56,9 @@ router.put('/:id', jwtauth, (req, res) => {
     const updates = {};
     const updateableFields = ['name', 'tags', 'price', 'thumbnail'];
 
+    console.log(req.params);
+    console.log(req.body);
+
     updateableFields.forEach(field => {
         if (field in req.body) {
             updates[field] = req.body[field];
@@ -55,7 +67,7 @@ router.put('/:id', jwtauth, (req, res) => {
 
     Product
         .findByIdAndUpdate(req.params.id, { $set: updates })
-        .then(user => res.status(204).end())
+        .then(product => res.status(201).json(product))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

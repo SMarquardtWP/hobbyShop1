@@ -60,24 +60,6 @@ function errorGetProducts(err){
     console.log(err);
 }
 
-/* function postProduct() {
-    let url = './products';
-    let nme =  
-    let tags =
-    let price =
-    let thumbnail =
-
-    let bodySettings = {
-        name: nme,
-        tags: tgs,
-        price: prce,
-        thumbnail: imglink
-    }
-
-    baseCall(url, 'POST', createSuccess, errorPostProducts, false, bodySettings);
-}*/
-
-
 // fix code for cases where some queries are blank
 function watchSearch(){
     console.log('watchSearch is listening');
@@ -105,8 +87,30 @@ function watchSearch(){
     });
 }
 
+function successLogin(responseJSON){
+    $(".loginResponse").html(`You have logged in successfully`);
+    localStorage.setItem("token", responseJSON.authToken);
+}
+
+function watchLogin(){
+    $('.login').on('submit', function(event){
+        event.preventDefault();
+        let user = $('.username').val();
+        let pass = $('.password').val();
+        let url = './auth/login';
+
+        let bodySettings = {
+            username : user,
+            password : pass
+        }
+
+        baseCall(url, 'POST', successLogin, errorLogin, false, bodySettings);
+    });
+}
+
 function runProductsPage(){
     watchSearch();
+    watchLogin();
     getProducts();
 }
 

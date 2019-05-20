@@ -32,13 +32,13 @@ function baseCall(url, mthd, successCallback, errorCallback, auth, body){
         });
 }
 
+function errorLogin(err){
+    console.log(err);
+}
+
 function successLogin(responseJSON){
     $(".loginResponse").html(`You have logged in successfully`);
     localStorage.setItem("token", responseJSON.authToken);
-}
-
-function errorLogin(err){
-    console.log(err);
 }
 
 function watchLogin(){
