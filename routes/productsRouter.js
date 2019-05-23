@@ -47,9 +47,6 @@ router.post('/', jwtauth, (req, res) => {
             thumbnail: req.body.thumbnail
         })
         .then(product => res.json(product));
-
-
-    //id will be generated sequentially
 });
 
 router.put('/:id', jwtauth, (req, res) => {
@@ -66,7 +63,7 @@ router.put('/:id', jwtauth, (req, res) => {
     });
 
     Product
-        .findByIdAndUpdate(req.params.id, { $set: updates })
+        .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
         .then(product => res.status(201).json(product))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
@@ -75,7 +72,7 @@ router.delete('/:id', jwtauth, (req, res) => {
 
     Product
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(204).end())
+        .then(() => res.status(201).json({"id":req.params.id, "status":"DELETE"}))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

@@ -60,10 +60,10 @@ router.post('/', (req, res) => {
         });
 });
 
-//primarily for users to update own password
+// for users to update own password
 router.put('/:id', (req, res) => {
     const updates = {};
-    const updateableFields = ['username', 'password'];
+    const updateableFields = ['password'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
 
     User
         .findByIdAndUpdate(req.params.id, { $set: updates })
-        .then(user => res.status(204).end())
+        .then(user => res.status(201).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
@@ -82,6 +82,9 @@ router.put('/admin/:id', (req, res) => {
     const updates = {};
     const updateableFields = ['username', 'password', 'email', 'authority'];
 
+    console.log(req.params);
+    console.log(req.body);
+
     updateableFields.forEach(field => {
         if (field in req.body) {
             updates[field] = req.body[field];
@@ -90,7 +93,7 @@ router.put('/admin/:id', (req, res) => {
 
     User
         .findByIdAndUpdate(req.params.id, { $set: updates })
-        .then(user => res.status(204).end())
+        .then(user => res.status(201).json(user))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
@@ -98,7 +101,7 @@ router.put('/admin/:id', (req, res) => {
 router.delete('/admin/:id', (req, res) => {
     User
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(204).end())
+        .then(() => res.status(201).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

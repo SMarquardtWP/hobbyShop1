@@ -10,7 +10,9 @@
 
 <body>
     <header>        
-        <img src='./images/hobbyShopIcon.jpg' alt="A black and white logo of a crown and armor wearing woman.">
+    <img src='./../images/hobbyShopIcon.jpg'
+            alt="A black and white logo of a crown and armor wearing woman.">
+        <h1>Game INC</h1>
     </header>
     <div class='searchTools'></div>
     <form class='userSearch'>
@@ -49,14 +51,15 @@
     <form class='newEntry'>
         <fieldset>
             <legend>Create New</legend>
-            <button type='button' class='newChoice' value='User'>
-            <button type='button' class='newChoice' value='Product'>
-            <button type='button' class='newChoice' value='Event'>
+            <button type='button' id='createUser' class='newChoice'>User</button>
+            <button type='button' id='createProduct' class='newChoice'>Product</button>
+            <button type='button' id='createEvent' class='newChoice'>Event</button>
             <div class='blankFields'></div>
         </fieldset>
     </form>
 
     <div class='results'></div>
+    <div class='newEntrySample'></div>
 
     <script src="https://code.jquery.com/jquery-3.4.0.js"
     integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>

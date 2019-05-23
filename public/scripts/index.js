@@ -38,20 +38,24 @@ function errorLogin(err){
 
 function successLogin(responseJSON){
     $(".loginResponse").html(`You have logged in successfully`);
-    localStorage.setItem("token", responseJSON.authToken);
+    localStorage.setItem("hobbyToken", responseJSON.authToken);
 }
 
 function watchLogin(){
     $('.login').on('submit', function(event){
         event.preventDefault();
-        let user = $('.username').val();
-        let pass = $('.password').val();
+        let user = $('#username').val();
+        let pass = $('#password').val();
         let url = './auth/login';
+
+        console.log("username =" + user);
 
         let bodySettings = {
             username : user,
             password : pass
         }
+
+        console.log(bodySettings);
 
         baseCall(url, 'POST', successLogin, errorLogin, false, bodySettings);
     });

@@ -33,6 +33,7 @@ function successSignup(user){
     setTimeout(function() {
         location.replace("./../index.html");
     });
+    
 }
 
 function invalidInputCheck(user, email, pass, conf) {
