@@ -167,8 +167,8 @@ function watchProductsGET() {
     });
 }
 
-/*function watchProductsPOST() {
-    $('.blankFields').on('submit', '.productCreate', function (event) {
+function watchProductsPOST() {
+    $('.blankFields').on('click', '.productCreate', function (event) {
         event.preventDefault();
 
         console.log('Heard POST request');
@@ -192,7 +192,7 @@ function watchProductsGET() {
 
         baseCall(reqUrl, 'POST', displayPost, errorFetch, true, body);
     })
-}*/
+}
 
 /*          
 <label for=prodName>Name: </label>
@@ -207,7 +207,8 @@ function watchProductsGET() {
 */
 
 function watchProductsUpdate() {
-    $('.results').on('submit', '.productClick', function (event) {
+    console.log('watching for updates');
+    $('.results').on('click', '.productClick', function (event) {
         event.preventDefault();
 
         let index = $(event.currentTarget).parent().attr('id');
@@ -342,6 +343,10 @@ function displayEvents(eventsJson) {
     };
 }
 
+function watchEventsPOST() {
+
+}
+
 function watchEventsUpdate() {
 
 }
@@ -394,17 +399,19 @@ function watchButtons() {
 }
 
 function watchForms() {
+    watchButtons();
+
     watchUsersGET();
+    watchUsersPOST();
     watchUsersUpdate();
 
     watchProductsGET();
-//    watchProductsPOST();
+    //    watchProductsPOST();
     watchProductsUpdate();
 
     watchEventsGET();
+    watchEventsPOST();
     watchEventsUpdate();
-
-    watchButtons();
 
     console.log('watchForms is listening');
 }
