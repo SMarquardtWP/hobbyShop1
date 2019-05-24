@@ -77,31 +77,32 @@ function watchUsersGET() {
 }
 
 function watchUsersPOST() {
+    console.log('watching for POSTS in users');
+    $('.blankFields').on('click', '#userCreate', function (event) {
+        event.preventDefault();
 
-}
+        console.log('Heard POST request');
 
-function handleUsers(usersJson) {
-    RESULTS.emptyIds();
-    RESULTS.ids = usersJson;
-    for (let i = 0; i < RESULTS.ids.length; i++) {
-        $('.results').append(`
-        <form class='userEdit' id='${i}'>
-            <p>Name: ${RESULTS.ids[i].username}</p> <input type='text' name='editUName${i}' placeholder='New username here'>
-            <p>Email:  ${RESULTS.ids[i].email}</p> <input type='text' name='editEmail${i}' placeholder='New email here'>
-            <p>Authority: ${RESULTS.ids[i].authority}</p> <input type='text' name='editAuthority${i}' placeholder='New authority here'><br>
-            <input type = 'submit' class='userClick' value='Update'><br>
-            <input type = 'submit' class='userClick' value='Delete'>
-        </form>`)
-    };
-}
+        $('.required').each(function () {
+            if ($(this).val().length == 0) {
+                $('.postError').html('<p>Please fill in all required fields.</p>');
+                return;
+            }
+        });
 
-function getUsers(queries) {
-    console.log('You are in the getUsers');
-    let reqUrl = './users';
-    if (queries)
-        reqUrl = reqUrl.concat(queries);
-    console.log(reqUrl);
-    baseCall(reqUrl, 'GET', handleUsers, errorFetch, true);
+        let body = {};
+
+        let reqUrl = './products';
+        body.name = $('.blankFields').find('input[name="prodName"]').val();
+        console.log(body.name);
+        body.tags = $('.blankFields').find('input[name="tags"]').val();
+        body.price = $('.blankFields').find('input[name="price"]').val();
+        body.thumbnail = $('.blankFields').find('input[name="thumbnail"]').val();
+
+        console.log(body);
+
+        baseCall(reqUrl, 'POST', displayPost, errorFetch, true, body);
+    })
 }
 
 function watchUsersUpdate() {
@@ -134,13 +135,57 @@ function watchUsersUpdate() {
         console.log(body);
 
         if (method == 'Update') {
-            baseCall(reqUrl, 'PUT', handleUsers, errorFetch, true, body);
+            baseCall(reqUrl, 'PUT', usersPrint, errorFetch, true, body);
         }
 
         if (method == 'Delete') {
-            baseCall(reqUrl, 'DELETE', handleUsers, errorFetch, true);
+            baseCall(reqUrl, 'DELETE', usersPrint, errorFetch, true);
         }
     });
+}
+
+function usersPrint(usersJson, i) {
+    $('.results').append(`
+    <form class='productEdit' id='${i}'>
+        <p>Name: ${product.name}</p> <input type='text' name='editPName${i}' placeholder='New name here'>
+        <p>Tags:  ${tags.toString()}</p><input type='text' name='editTags${i}' placeholder='New tags here'>
+        <p>Price: ${product.price}</p><input type='text' name='editPrice${i}' placeholder='New price here'>
+        <img src = "${product.thumbnail}" alt = "Image of game"><input type='text' name='editThumbnail${i}' placeholder='New thumbnail here'>
+        <input type='submit' class='productClick' value='Update'>
+        <input type='submit' class='productClick' value='Delete'>
+    </form>`)
+}
+
+function getUsers(queries) {
+    console.log('You are in the getUsers');
+    let reqUrl = './users';
+    if (queries)
+        reqUrl = reqUrl.concat(queries);
+    console.log(reqUrl);
+    baseCall(reqUrl, 'GET', usersPrint, errorFetch, true);
+}
+
+function displayPost() {
+    $('.postOutcome').css("display", "inline-block");
+    $('.postOutcome').html('<p>Successfully added new item</p>');
+    $('.postOutcome').fadeOut(1000);
+}
+
+function displayUpdate(productJson) {
+    console.log('Displaying Your Update');
+    console.log(productJson);
+    $('.results').empty();
+    for (let i = 0; i < RESULTS.ids.length; i++) {
+        if (productJson._id == RESULTS.ids[i]._id) {
+            if (productJson.status == "DELETE") {
+                let removed = RESULTS.ids.splice(i, 1);
+                i++;
+            }
+            else
+                RESULTS.ids[i] = productJson;
+        }
+        productPrint(RESULTS.ids[i], i);
+    }
 }
 
 /*----------------------- PRODUCTS -------------------------*/
@@ -168,25 +213,27 @@ function watchProductsGET() {
 }
 
 function watchProductsPOST() {
-    $('.blankFields').on('click', '.productCreate', function (event) {
+    console.log('watching for POSTS in products');
+    $('.blankFields').on('click', '#productCreate', function (event) {
         event.preventDefault();
 
         console.log('Heard POST request');
 
-        $('.required').each(function(){
-            if ($(this.val().length == 0)){
-                $('.postError').html('<p>Please fill in all required fields.</p>');
-                return;
+        $('.required').each(function () {
+            if ($(this).val() == 0) {
+                displayPost('Please fill in all required fields');
+                throw new Error("Missing required fields");
             }
         });
 
         let body = {};
 
         let reqUrl = './products';
-        body.name = $('.blankfields').find('input[name="prodName"]').val();
-        body.tags = $('.blankfields').find('input[name="tags"]').val();
-        body.price = $('.blankfields').find('input[name="price"]').val();
-        body.thumbnail = $('.blankfields').find('input[name="thumbnail"]').val();
+        body.name = $('.blankFields').find('input[name="prodName"]').val();
+        console.log(body.name);
+        body.tags = $('.blankFields').find('input[name="tags"]').val();
+        body.price = $('.blankFields').find('input[name="price"]').val();
+        body.thumbnail = $('.blankFields').find('input[name="thumbnail"]').val();
 
         console.log(body);
 
@@ -196,14 +243,14 @@ function watchProductsPOST() {
 
 /*          
 <label for=prodName>Name: </label>
-<input type='text' name='prodName' class='required' placeholder='product name'><br>
+<input type='text' name='prodName' class='required' placeholder='product name'>
 <label for=tags>Tags: </label>
-<input type='text' name='tags' class='required' placeholder='card, dice, e.g.'><br>
+<input type='text' name='tags' class='required' placeholder='card, dice, e.g.'>
 <label for=price>Price: $</label>
-<input type='text' name='price' class='required' placeholder='price'><br>
+<input type='text' name='price' class='required' placeholder='price'>
 <label for=thumbnail>Thumbnail Image Link: </label>
 <input type='text' name='thumbnail' class='required' placeholder='photoplace.com/img e.g.'>
-<input type='submit' class='productCreate' value='Submit'> 
+<input type='submit' id='productCreate' value='Submit'> 
 */
 
 function watchProductsUpdate() {
@@ -268,8 +315,13 @@ function displayProducts(productsJson) {
     console.log(RESULTS.ids);
 }
 
-function displayPost() {
-    $('.newEntrySample').html('<p>Success</p>')
+function displayPost(message) {
+    $('.postOutcome').css("display", "inline-block");
+    if (message)
+        $('.postOutcome').html(`<p>${message}</p>`);
+    else
+        $('.postOutcome').html(`<p>Successfully created new item.</p>`);
+    $('.postOutcome').fadeOut(2000);
 }
 
 function displayUpdate(productJson) {
@@ -279,7 +331,8 @@ function displayUpdate(productJson) {
     for (let i = 0; i < RESULTS.ids.length; i++) {
         if (productJson._id == RESULTS.ids[i]._id) {
             if (productJson.status == "DELETE") {
-                RESULTS.ids[i] = '';
+                let removed = RESULTS.ids.splice(i, 1);
+                i++;
             }
             else
                 RESULTS.ids[i] = productJson;
@@ -358,42 +411,49 @@ function watchButtons() {
         event.preventDefault();
         if ($(event.currentTarget).attr('id') == 'createUser')
             $('.blankFields').html(`
+            <div class='gridInputs'>
                 <label for=userName>Name: </label>
-                <input type='text' name='userName' placeholder='username'><br>
+                <input type='text' name='userName' placeholder='username'>
                 <label for=password>Password: </label>
-                <input type='text' name='password' placeholder='password'><br>
+                <input type='text' name='password' placeholder='password'>
                 <label for=email>Email: </label>
-                <input type='text' name='email' placeholder='email@address.com'><br>
+                <input type='text' name='email' placeholder='email@address.com'>
                 <label for=authority>Authority Level: </label>
                 <input type='text' name='authority' placeholder='1-3'>
+                </div>
+            <input type='submit' id='productCreate' value='Submit'>
             `)
         if ($(event.currentTarget).attr('id') == 'createProduct')
             $('.blankFields').html(`
-            <label for=prodName>Name: </label>
-            <input type='text' name='prodName' class='required' placeholder='product name'><br>
-            <label for=tags>Tags: </label>
-            <input type='text' name='tags' class='required' placeholder='card, dice, e.g.'><br>
-            <label for=price>Price: $</label>
-            <input type='text' name='price' class='required' placeholder='price'><br>
-            <label for=thumbnail>Thumbnail Image Link: </label>
-            <input type='text' name='thumbnail' class='required' placeholder='photoplace.com/img e.g.'>
-            <input type='submit' class='productCreate' value='Submit'>
-            <div class='postError'></div>
+            <div class='gridInputs'>
+                <label for=prodName>Name: </label>
+                <input type='text' name='prodName' class='required' placeholder='product name'>
+                <label for=tags>Tags: </label>
+                <input type='text' name='tags' class='required' placeholder='card, dice, e.g.'>
+                <label for=price>Price: $</label>
+                <input type='text' name='price' class='required' placeholder='price'>
+                <label for=thumbnail>Thumbnail Image Link: </label>
+                <input type='text' name='thumbnail' class='required' placeholder='photoplace.com/img e.g.'>
+            </div>
+            <input type='submit' id='productCreate' value='Submit'>
         `)
         if ($(event.currentTarget).attr('id') == 'createEvent')
             $('.blankFields').html(`
-            <label for=eventName>Name: </label>
-            <input type='text' name='eventName' placeholder='event name'><br>
-            <label for=date>Date: </label>
-            <input type='text' name='date' placeholder='month date, YYYY TT:TT:TT'><br>
-            <label for=price>Price: $</label>
-            <input type='text' name='price' placeholder='price'><br>
-            <label for=max>Maximum Attend: </label>
-            <input type='text' name='max' placeholder='maximum attendees'><br>
-            <label for=currentAttend>Attending: </label>
-            <input type='text' name='currentAttend' placeholder='emails of attendees'><br>
-            <label for=thumbnail>Thumbnail Image Link: </label>
-            <input type='text' name='thumbnail' placeholder='photoplace.com/img e.g.'>
+            <div class='gridInputs'>
+                <label for=eventName>Name: </label>
+                <input type='text' name='eventName' placeholder='event name'>
+                <label for=date>Date: </label>
+                <input type='text' name='date' placeholder='month date, YYYY TT:TT:TT'>
+                <label for=price>Price: $</label>
+                <input type='text' name='price' placeholder='price'>
+                <label for=max>Maximum Attend: </label>
+                <input type='text' name='max' placeholder='maximum attendees'>
+                <label for=currentAttend>Attending: </label>
+                <input type='text' name='currentAttend'     placeholder='emails of attendees'>
+                <label for=thumbnail>Thumbnail Image Link: </label>
+                <input type='text' name='thumbnail' placeholder='photoplace.com/img e.g.'>
+            </div>
+            <input type='submit' id='productCreate' value='Submit'>
         `)
     });
 }
@@ -406,7 +466,7 @@ function watchForms() {
     watchUsersUpdate();
 
     watchProductsGET();
-    //    watchProductsPOST();
+    watchProductsPOST();
     watchProductsUpdate();
 
     watchEventsGET();

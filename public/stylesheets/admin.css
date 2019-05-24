@@ -1,0 +1,13 @@
+.gridInputs {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
+.gridInputs  label {
+    text-align:right;
+}
+
+.postOutcome {
+    display: none;
+}
