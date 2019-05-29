@@ -30,7 +30,7 @@ router.get('/', jwtauth, (req, res) => {
         .find(search)
         .then(users => {
             console.log(users);
-            res.json(users.map(usr => usr.serialize()));
+            res.json(users);
         })
         .catch(err => {
             console.error(err);
@@ -72,8 +72,8 @@ router.put('/:id', (req, res) => {
     });
 
     User
-        .findByIdAndUpdate(req.params.id, { $set: updates })
-        .then(user => res.status(201).end())
+        .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
+        .then(user => res.status(201).json(user))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
@@ -92,7 +92,7 @@ router.put('/admin/:id', (req, res) => {
     });
 
     User
-        .findByIdAndUpdate(req.params.id, { $set: updates })
+        .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
         .then(user => res.status(201).json(user))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });

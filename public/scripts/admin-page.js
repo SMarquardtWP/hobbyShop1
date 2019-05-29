@@ -93,11 +93,10 @@ function watchUsersPOST() {
         let body = {};
 
         let reqUrl = './products';
-        body.name = $('.blankFields').find('input[name="prodName"]').val();
+        body.username = $('.blankFields').find('input[name="userName"]').val();
         console.log(body.name);
-        body.tags = $('.blankFields').find('input[name="tags"]').val();
-        body.price = $('.blankFields').find('input[name="price"]').val();
-        body.thumbnail = $('.blankFields').find('input[name="thumbnail"]').val();
+        body.email = $('.blankFields').find('input[name="email"]').val();
+        body.auth = $('.blankFields').find('input[name="auth"]').val();
 
         console.log(body);
 
@@ -108,7 +107,6 @@ function watchUsersPOST() {
 function watchUsersUpdate() {
     $('.results').on('click', '.userClick', function (event) {
         event.preventDefault();
-        $('.results').empty();
 
         let index = $(event.currentTarget).parent().attr('id');
         let method = event.currentTarget.value;
@@ -119,15 +117,15 @@ function watchUsersUpdate() {
         let newAuthority;
         let body = {};
 
-        if ($(`input[name="editUName${index}"]`).val() != '') {
+        if ($(`input[name="editUName${index}"]`).val()) {
             newUsername = $(`input[name="editUName${index}"]`).val();
             body.username = newUsername;
         }
-        if ($(`input[name="editEmail${index}"]`).val() != '') {
+        if ($(`input[name="editEmail${index}"]`).val()) {
             newEmail = $(`input[name="editEmail${index}"]`).val();
             body.email = newEmail;
         }
-        if ($(`input[name="editAuthority${index}"]`).val() != '') {
+        if ($(`input[name="editAuthority${index}"]`).val()) {
             newAuthority = $(`input[name="editAuthority${index}"]`).val();
             body.authority = newAuthority;
         }
@@ -135,26 +133,37 @@ function watchUsersUpdate() {
         console.log(body);
 
         if (method == 'Update') {
-            baseCall(reqUrl, 'PUT', usersPrint, errorFetch, true, body);
+            baseCall(reqUrl, 'PUT', displayUserUpdate, errorFetch, true, body);
         }
 
         if (method == 'Delete') {
-            baseCall(reqUrl, 'DELETE', usersPrint, errorFetch, true);
+            baseCall(reqUrl, 'DELETE', displayUserUpdate, errorFetch, true);
         }
     });
 }
 
-function usersPrint(usersJson, i) {
+function displayUsers(productsJson) {
+    console.log('In displayUsers');
+    RESULTS.emptyIds();
+    RESULTS.ids = productsJson;
+    for (let i = 0; i < RESULTS.ids.length; i++) {
+        usersPrint(RESULTS.ids[i], i);
+    };
+    console.log(RESULTS.ids);
+}
+
+function usersPrint(user, i) {
     $('.results').append(`
-    <form class='productEdit' id='${i}'>
-        <p>Name: ${product.name}</p> <input type='text' name='editPName${i}' placeholder='New name here'>
-        <p>Tags:  ${tags.toString()}</p><input type='text' name='editTags${i}' placeholder='New tags here'>
-        <p>Price: ${product.price}</p><input type='text' name='editPrice${i}' placeholder='New price here'>
-        <img src = "${product.thumbnail}" alt = "Image of game"><input type='text' name='editThumbnail${i}' placeholder='New thumbnail here'>
-        <input type='submit' class='productClick' value='Update'>
-        <input type='submit' class='productClick' value='Delete'>
+    <form class='userEdit' id='${i}'>
+        <p>Name: ${user.username}</p> <input type='text' name='editUName${i}' placeholder='New name here'>
+        <p>Email: ${user.email}</p><input type='text' name='editEmail${i}' placeholder='New price here'>
+        <p>Authority: ${user.authority}</p><input type='text' name='editAuthority${i}' placeholder='New auth: 1-3'>
+        <input type='submit' class='userClick' value='Update'>
+        <input type='submit' class='userClick' value='Delete'>
     </form>`)
 }
+
+
 
 function getUsers(queries) {
     console.log('You are in the getUsers');
@@ -162,29 +171,23 @@ function getUsers(queries) {
     if (queries)
         reqUrl = reqUrl.concat(queries);
     console.log(reqUrl);
-    baseCall(reqUrl, 'GET', usersPrint, errorFetch, true);
+    baseCall(reqUrl, 'GET', displayUsers, errorFetch, true);
 }
 
-function displayPost() {
-    $('.postOutcome').css("display", "inline-block");
-    $('.postOutcome').html('<p>Successfully added new item</p>');
-    $('.postOutcome').fadeOut(1000);
-}
-
-function displayUpdate(productJson) {
-    console.log('Displaying Your Update');
-    console.log(productJson);
+function displayUserUpdate(userJson) {
+    console.log('Displaying Your User Update');
+    console.log(userJson);
     $('.results').empty();
     for (let i = 0; i < RESULTS.ids.length; i++) {
-        if (productJson._id == RESULTS.ids[i]._id) {
-            if (productJson.status == "DELETE") {
+        if (userJson._id == RESULTS.ids[i]._id) {
+            if (userJson.status == "DELETE") {
                 let removed = RESULTS.ids.splice(i, 1);
                 i++;
             }
             else
-                RESULTS.ids[i] = productJson;
+                RESULTS.ids[i] = userJson;
         }
-        productPrint(RESULTS.ids[i], i);
+        usersPrint(RESULTS.ids[i], i);
     }
 }
 
@@ -288,11 +291,11 @@ function watchProductsUpdate() {
         console.log(body);
 
         if (method == 'Update') {
-            baseCall(reqUrl, 'PUT', displayUpdate, errorFetch, true, body);
+            baseCall(reqUrl, 'PUT', displayProductUpdate, errorFetch, true, body);
         }
 
         if (method == 'Delete') {
-            baseCall(reqUrl, 'DELETE', displayUpdate, errorFetch, true);
+            baseCall(reqUrl, 'DELETE', displayProductUpdate, errorFetch, true);
         }
     });
 }
@@ -324,7 +327,7 @@ function displayPost(message) {
     $('.postOutcome').fadeOut(2000);
 }
 
-function displayUpdate(productJson) {
+function displayProductUpdate(productJson) {
     console.log('Displaying Your Update');
     console.log(productJson);
     $('.results').empty();
