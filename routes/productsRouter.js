@@ -13,15 +13,29 @@ router.use("/", bodyParser.urlencoded({
 }));
 
 router.get('/', (req, res) => {
-    console.log(req.query);
+    let xtags = [];
+    let xname = {};
+    let queries = [];
     let search = {};
 
-    if (req.query.name)
-        search.name = {$regex: req.query.name, $options:"i" };
-    if (req.query.tags)
-        search.tags = { $regex: req.query.tags, $options:"i" };
+    if (req.query.name) {
+        xname = {"name": {$regex: req.query.name, $options: "i" }};
+        queries.push(xname);
+    }
+    if (req.query.tags) {
+        xtags = req.query.tags.split(',');
+        for (let i = 0; i < xtags.length; i++) {
+            xtags[i] = xtags[i].trim();
+            xtags[i] = {"tags" : {$regex: xtags[i], $options: "i" }};
+            queries.push(xtags[i]);
+        }
+    }
 
-    console.log(search);
+    for ( let i=0; i<queries.length; i++)
+     console.log("Value " + i + "is " + JSON.stringify(queries[i]));
+
+    if (queries.length != 0)
+        search = {$and: queries};
 
     Product
         .find(search)
@@ -32,17 +46,24 @@ router.get('/', (req, res) => {
             res.json(products);
         })
         .catch(err => {
-            res.status(500).json({message:"Error, something went wrong"});
+            res.status(500).json({ message: "Error, something went wrong" });
         })
     //implement error catching
 });
 
 router.post('/', jwtauth, (req, res) => {
     // make sure to insert code forcing required fields to be entered
+
+    //for loop to create an array for the tags, trim commas and spaces
+    let xtags = [];
+    xtags = req.body.tags.split(',');
+    for (let i = 0; i < xtags.length; i++)
+        xtags[i] = xtags[i].trim();
+
     Product
         .create({
             name: req.body.name,
-            tags: req.body.tags,
+            tags: xtags,
             price: req.body.price,
             thumbnail: req.body.thumbnail
         })
@@ -63,7 +84,7 @@ router.put('/:id', jwtauth, (req, res) => {
     });
 
     Product
-        .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
+        .findByIdAndUpdate(req.params.id, { $set: updates }, { new: true })
         .then(product => res.status(201).json(product))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
@@ -72,7 +93,7 @@ router.delete('/:id', jwtauth, (req, res) => {
 
     Product
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(201).json({"id":req.params.id, "status":"DELETE"}))
+        .then(() => res.status(201).json({ "_id": req.params.id, "status": "DELETE" }))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

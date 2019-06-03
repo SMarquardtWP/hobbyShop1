@@ -1,13 +1,24 @@
-.gridInputs {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    grid-gap: 5px;
+.right {
+    float:right;
 }
 
-.gridInputs  label {
-    text-align:right;
+.overflowManage {
+    overflow: hidden;
 }
 
 .postOutcome {
     display: none;
+}
+
+
+.dateEntry * {
+    display:inline-block;
+}
+
+.dateEntry label {
+    display: none;
+}
+
+.dateEntry input {
+    width:45px;
 }

@@ -68,7 +68,7 @@ router.put('/:id', jwtauth, (req, res) => {
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
-//for clerk+ level users to manage event information
+//for admin level users to manage event information
 router.put('/:id', jwtauth, (req, res) => {
     const updates = {};
     const updateableFields = ['name', 'date', 'price', 'maxAttend', 'attend'];
@@ -80,17 +80,18 @@ router.put('/:id', jwtauth, (req, res) => {
     });
 
     Event
-        .findByIdAndUpdate(req.params.id, { $set: updates })
-        .then(user => res.status(204).end())
+        .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
+
+        .then(user => res.status(201).json(product))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
-//for clerk+ level users to remove events from list
+//for admin level users to remove events from list
 router.delete('/:id', jwtauth, (req, res) => {
 
     Event
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(204).end())
+        .then(() => res.status(201).json({"_id":req.params.id, "status":"DELETE"}))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

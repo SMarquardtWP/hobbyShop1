@@ -22,7 +22,7 @@ router.get('/', jwtauth, (req, res) => {
     if (req.query.email)
         search.email = { $regex: req.query.email, $options:"i" };
     if (req.query.auth)
-        search.auth = { $regex: req.query.auth, $options:"i" };
+        search.authority = req.query.auth;
 
     console.log(search);
 
@@ -101,7 +101,7 @@ router.put('/admin/:id', (req, res) => {
 router.delete('/admin/:id', (req, res) => {
     User
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(201).end())
+        .then(() => res.status(201).json({"_id":req.params.id, "status":"DELETE"}))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
