@@ -14,7 +14,7 @@ function baseCall(url, mthd, successCallback, errorCallback, auth, body){
         settings.body = JSON.stringify(body);
     }
     if (auth){
-        token = localStorage.getItem('token');
+        let token = localStorage.getItem('hobbyToken');
         settings.headers.Authorization = 'Bearer ' + token;
     }
 

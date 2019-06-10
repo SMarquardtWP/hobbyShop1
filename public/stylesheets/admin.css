@@ -1,3 +1,15 @@
+/*Colors key
+Navy: #18121E
+Slate: #233237
+Rust: #984B43
+Sun: #EAC67A
+Aluminum #D9D9D9
+*/
+
+.hidden {
+    display:none;
+}
+
 .right {
     float:right;
 }
@@ -21,4 +33,31 @@
 
 .dateEntry input {
     width:45px;
+}
+
+.searchTools fieldset {
+    border: 2px solid #984B43;
+    margin-bottom: 15px;
+}
+
+.searchTools legend {
+    display: inline-block;
+}
+
+.searchTools label {
+    float: right;
+}
+
+.newEntry fieldset {
+    text-align: center;
+    border: 2px solid #EAC67A;
+}
+
+.newEntry legend {
+    display: inline;
+}
+
+.newEntry button {
+    margin-right: 10px;
+    margin-left: 10px;
 }

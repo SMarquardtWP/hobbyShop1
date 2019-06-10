@@ -4,37 +4,45 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
     <link rel="stylesheet" href="./stylesheets/index.css">
-<!--    <link rel="stylesheet" href="products.css"> -->
+    <link rel="stylesheet" href="./stylesheets/products.css">
 
     <title></title>
 </head>
 
 <body>
     <header>
-        <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
-            alt="A black and white logo of a crown and armor wearing woman.">
-        <h1>INC</h1>
+        <div class="logo">
+            <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
+                alt="A black and white logo of a crown and armor wearing woman.">
+            <h1>INC</h1>
+        </div>
+
 
         <form class="login">
             <fieldset>
-                <legend>Login</legend>
-                <label for="username">Username: </label>
-                <input type="text" id="username" name="username" placeholder="username"><br>
-                <label for="password">Password: </label>
-                <input type="text" id="password" name="password" placeholder="password"><br>
-                <input type="submit" value="Login">
+                <legend>Sign-In</legend>
+                <div class="loginStyle">
+                    <label for="username">Username: </label>
+                    <input type="text" id="username" name="username" placeholder="Username">
+                    <label for="password">Password: </label>
+                    <input type="text" id="password" name="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Submit">
             </fieldset>
             <p class="loginResponse"></p>
         </form>
 
+
         <nav>
             <ul>
                 <li><a href="./index.html">Home</a></li>
-                <li><a href="./products.html">Products</a></li>
+                <li><a href="./products.html" class='active'>Products</a></li>
                 <li><a href="./events.html">Events</a></li>
                 <li><a href="./contact.html">Contact Us</a></li>
             </ul>
+            <a href="./sign-up.html">Create an Account</a>
         </nav>
     </header>
 
@@ -52,19 +60,19 @@
     </form>
 
     <ul>
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./products.html">Products</a></li>
-            <li><a href="./events.html">Events</a></li>
-            <li><a href="./contact.html">Contact Us</a></li>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./products.html">Products</a></li>
+        <li><a href="./events.html">Events</a></li>
+        <li><a href="./contact.html">Contact Us</a></li>
     </ul>
 
-    <div class="productListing">
+    <div class="results productListing">
 
     </div>
     <script src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
-        <script src="./scripts/index.js"></script>
-        <script src="./scripts/products.js"></script>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/products.js"></script>
 </body>
 
 </html>

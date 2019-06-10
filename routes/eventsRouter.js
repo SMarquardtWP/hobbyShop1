@@ -54,7 +54,7 @@ router.post('/', jwtauth, (req, res) => {
 //for member level users to subscribe to events
 router.put('/:id', jwtauth, (req, res) => {
     const updates = {};
-    const updateableFields = ['name', 'date', 'free', 'maxAttend', 'attend'];
+    const updateableFields = ['attend'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
@@ -69,20 +69,20 @@ router.put('/:id', jwtauth, (req, res) => {
 });
 
 //for admin level users to manage event information
-router.put('/:id', jwtauth, (req, res) => {
+router.put('/admin/:id', jwtauth, (req, res) => {
     const updates = {};
-    const updateableFields = ['name', 'date', 'price', 'maxAttend', 'attend'];
+    const updateableFields = ['name', 'date', 'price', 'maxAttend', 'attend', 'thumbnail'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
             updates[field] = req.body[field];
         }
     });
-
+    console.log(updateableFields);
+    console.log(req.body);
     Event
         .findByIdAndUpdate(req.params.id, { $set: updates }, {new:true})
-
-        .then(user => res.status(201).json(product))
+        .then(event => res.status(201).json(event))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

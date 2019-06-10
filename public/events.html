@@ -1,49 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">    
-        <title>Game INC Events</title>
-        <link rel='stylesheet' href='./stylesheets/index.css'>
-    </head>
 
-    <body>
-        <header>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Game INC Events</title>
+    <link rel='stylesheet' href='./stylesheets/index.css'>
+</head>
+
+<body>
+    <header>
+
+        <div class="logo">
             <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
                 alt="A black and white logo of a crown and armor wearing woman.">
             <h1>INC</h1>
-    
-            <form class="login">
-                <fieldset>
-                    <legend>Login</legend>
+        </div>
+
+
+        <form class="login">
+            <fieldset>
+                <legend>Sign-In</legend>
+                <div class="loginStyle">
                     <label for="username">Username: </label>
-                    <input type="text" id="username" name="username" placeholder="username"><br>
+                    <input type="text" id="username" name="username" placeholder="Username">
                     <label for="password">Password: </label>
-                    <input type="text" id="password" name="password" placeholder="password"><br>
-                    <input type="submit" value="Login">
-                </fieldset>
-                <p class="loginResponse"></p>
-            </form>
-    
-            <nav>
-                <ul>
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="./products.html">Products</a></li>
-                    <li><a href="./events.html">Events</a></li>
-                    <li><a href="./contact.html">Contact Us</a></li>
-                </ul>
-            </nav>
-        </header>
-    <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities. Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
+                    <input type="text" id="password" name="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Submit">
+            </fieldset>
+            <p class="loginResponse"></p>
+        </form>
+
+
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./products.html">Products</a></li>
+                <li><a href="./events.html">Events</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+            <a href="./sign-up.html">Create an Account</a>
+        </nav>
+
+    </header>
+    <p>Welcome to Game INC, your local hot spot for board games, card games, tournaments, and other tabletop activities.
+        Please view our products on the Products Page, or take a look at what is coming up on the Events page.</p>
 
 
     <h2>Events</h2>
 
-    <div class='eventListing'></div>
+    <div class='results eventListing'></div>
 
     <script src="https://code.jquery.com/jquery-3.4.0.js"
-    integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
     <script src="./scripts/index.js"></script>
     <script src="./scripts/events.js"></script>
 </body>
+
 </html>

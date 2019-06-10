@@ -8,41 +8,6 @@ const RESULTS = {
     }
 };
 
-
-function baseCall(url, mthd, successCallback, errorCallback, auth, body) {
-    //sets up settings for call
-    console.log(body);
-    let settings = {
-        method: mthd,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    if (body) {
-        settings.body = JSON.stringify(body);
-    }
-    console.log(body);
-    if (auth) {
-        let token = localStorage.getItem('hobbyToken');
-        settings.headers.Authorization = 'Bearer ' + token;
-    }
-
-    console.log(settings);
-
-    //makes fetch call
-    fetch(url, settings)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .then(responseJson => successCallback(responseJson))
-        .catch(err => {
-            errorCallback(err);
-        });
-}
-
 function errorFetch(err) {
     console.log(err);
 }
@@ -71,6 +36,21 @@ function checkEmpty() {
 
     if (empty == true)
         return true
+}
+
+function displayShift(mode) {
+    if (mode == "user") {
+        $('.results').removeClass('eventListing productListing');
+        $('.results').addClass('userListing');
+    }
+    if (mode == "product") {
+        $('.results').removeClass('eventListing userListing');
+        $('.results').addClass('productListing');
+    }
+    if (mode == "event") {
+        $('.results').removeClass('userListing productListing');
+        $('.results').addClass('eventListing');
+    }
 }
 /*----------------------------- USERS ------------------------*/
 
@@ -110,7 +90,7 @@ function watchUsersPOST() {
 
         let empty = checkEmpty();
 
-        if (empty = true) {
+        if (empty == true) {
             displayPost(1, 'Please fill in all required fields');
         } else {
             let body = {};
@@ -170,6 +150,7 @@ function displayUsers(productsJson) {
     console.log('In displayUsers');
     RESULTS.emptyIds();
     RESULTS.ids = productsJson;
+    displayShift("user");
     for (let i = 0; i < RESULTS.ids.length; i++) {
         usersPrint(RESULTS.ids[i], i);
     };
@@ -186,8 +167,6 @@ function usersPrint(user, i) {
         <input type='submit' class='userClick' value='Delete'>
     </form>`)
 }
-
-
 
 function getUsers(queries) {
     console.log('You are in the getUsers');
@@ -250,7 +229,7 @@ function watchProductsPOST() {
 
         console.log("empty is: " + empty);
 
-        if (empty = true) {
+        if (empty == true) {
             displayPost(1, 'Please fill in all required fields');
         } else {
             let body = {};
@@ -324,6 +303,7 @@ function getProducts(queries) {
 function displayProducts(productsJson) {
     RESULTS.emptyIds();
     RESULTS.ids = productsJson;
+    displayShift("product");
     for (let i = 0; i < RESULTS.ids.length; i++) {
         productPrint(RESULTS.ids[i], i);
     };
@@ -390,7 +370,7 @@ function watchEventsPOST() {
 
         let empty = checkEmpty();
 
-        if (empty = true) {
+        if (empty == true) {
             displayPost(1, 'Please fill in all required fields');
         } else {
             let body = {};
@@ -427,11 +407,12 @@ function watchEventsUpdate() {
         let index = $(e.currentTarget).parent().attr('id');
         let method = e.currentTarget.value;
         console.log('index', index);
-        let reqUrl = `./events/${RESULTS.ids[index]._id}`;
+        let reqUrl = `./events/admin/${RESULTS.ids[index]._id}`;
         let newName;
         let newDate;
         let newPrice;
         let newMax;
+        let newAttend = [];
         let newThumbnail;
         let body = {};
 
@@ -439,8 +420,18 @@ function watchEventsUpdate() {
             newName = $(`input[name="editEName${index}"]`).val();
             body.name = newName;
         }
-        if ($(`input[name="editDate${index}"]`).val() != '') {
-            newTags = $(`input[name="editDate${index}"]`).val();
+        if ($(`input[name="year${index}"]`).val() != '' &&
+            $(`input[name="month${index}"]`).val() != '' &&
+            $(`input[name="day${index}"]`).val() != '' &&
+            $(`input[name="hour${index}"]`).val() != '' &&
+            $(`input[name="minute${index}"]`).val() != '') {
+            newDate = new Date(
+                $('.results').find(`input[name="year${index}"]`).val(),
+                $('.results').find(`input[name="month${index}"]`).val() - 1,
+                $('.results').find(`input[name="day${index}"]`).val(),
+                $('.results').find(`input[name="hour${index}"]`).val(),
+                $('.results').find(`input[name="minute${index}"]`).val()
+            );
             body.date = newDate;
         }
         if ($(`input[name="editPrice${index}"]`).val() != '') {
@@ -455,6 +446,15 @@ function watchEventsUpdate() {
             newThumbnail = $(`input[name="editThumbnail${index}"]`).val();
             body.thumbnail = newThumbnail;
         }
+
+
+        for (let i = 0; i < RESULTS.ids[index].attend.length; i++) {
+            if ($(`.attendee${index}-${i}`).is(':checked') == false)
+                newAttend.push($(`.attendee${index}-${i}`).parent().text());
+        }
+        console.log('new Array is ' + newAttend);
+        if (newAttend.length != RESULTS.ids[index].attend.length)
+            body.attend = newAttend;
 
         console.log(body);
 
@@ -480,6 +480,7 @@ function getEvents(queries) {
 function displayEvents(eventsJson) {
     RESULTS.emptyIds();
     RESULTS.ids = eventsJson;
+    displayShift("event");
     for (let i = 0; i < RESULTS.ids.length; i++) {
         eventPrint(RESULTS.ids[i], i);
     };
@@ -514,9 +515,9 @@ function displayEventUpdate(eventJson) {
 
 function eventPrint(event, index) {
 
-    let attending;
+    let attending = '';
     for (let i = 0; i < event.attend.length; i++) {
-        attending += `<dd><p>${event.attend[i]}</p><input type='checkbox' class='removeAttendee'</dd>`;
+        attending += `<dd>${event.attend[i]}<input type='checkbox' class='attendee${index}-${i}'></dd>`;
         console.log(attending);
     }
     if (attending == '') { attending = 'No one has signed up yet'; }
@@ -527,11 +528,24 @@ function eventPrint(event, index) {
     $('.results').append(`
     <form class='eventEdit' id='${index}'>
         <p>Name: ${event.name}</p> <input type='text' name='editEName${index}' placeholder='New name here'>
-        <p>Date:  ${d.toDateString()}, ${d.getHours()}:${d.getMinutes()}</p><input type='text' name='editTags${index}' placeholder='New Date here'>
+        <p>Date:  ${d.toDateString()}, ${d.getHours()}:${d.getMinutes()}</p>
+        <fieldset class='dateEntry'>
+            <legend>Date (month, day, year, time): </legend>
+                <label for=month${index}>Month</label>
+                <input type='text' name='month${index}' class='dateField required' placeholder='MM'><span class =''>/</span>
+                <label for=day${index}>Day</label>
+                <input type='text' name='day${index}' class='dateField required' placeholder='DD'><span class=''>/</span>
+                <label for=year${index}>Year</label>
+                <input type='text' name='year${index}' class='dateField required' placeholder='YYYY'><span class=''>/</span> 
+                <label for=hour${index}>Hour</label>
+                <input type='text' name='hour${index}' class='dateField required' placeholder='TT'><span class=''>:</span>
+                <label for=minute${index}>Minute</label>
+                <input type='text' name='minute${index}' class='dateField required ' placeholder='TT'>
+        </fieldset>
         <p>Price: ${event.price}</p><input type='text' name='editPrice${index}' placeholder='New price here'>
         <p>Attendance: ${event.attend.length}/${event.maxAttend}</p><input type='text' name='editMax${index}' placeholder='New max attend'>
-        <dl><dt>Attending Emails: <dt>
-        ${attending}</dl>
+        <dl><dt>Attending Emails:</dt>${attending}</dl>
+        <p>Checked emails will be removed from list on update.</p>
         <img src = "${event.thumbnail}" alt = "Image of event"><input type='text' name='editThumbnail${index}' placeholder='New thumbnail here'>
         <input type='submit' class='eventClick' value='Update'>
         <input type='submit' class='eventClick' value='Delete'>

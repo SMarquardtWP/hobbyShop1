@@ -10,44 +10,76 @@
 </head>
 
 <body>
-    <header>        
-    <img src='./../images/hobbyShopIcon.jpg'
-            alt="A black and white logo of a crown and armor wearing woman.">
-        <h1>Game INC</h1>
+    <header>
+        <header>
+            <div class="logo">
+                <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
+                    alt="A black and white logo of a crown and armor wearing woman.">
+                <h1>INC</h1>
+            </div>
+
+
+            <form class="login">
+                <fieldset>
+                    <legend>Sign-In</legend>
+                    <div class="loginStyle">
+                        <label for="username">Username: </label>
+                        <input type="text" id="username" name="username" placeholder="Username">
+                        <label for="password">Password: </label>
+                        <input type="text" id="password" name="password" placeholder="Password">
+                        <input type="submit" class="logButton" value="Log In">
+                        <input type="submit" class="logButton" value="Log Out">
+                    </div>
+                </fieldset>
+                <p class="loginResponse"></p>
+            </form>
+
+
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./products.html" class='active'>Products</a></li>
+                    <li><a href="./events.html">Events</a></li>
+                    <li><a href="./contact.html">Contact Us</a></li>
+                </ul>
+                <a href="./sign-up.html">Create an Account</a>
+            </nav>
+        </header>
     </header>
-    <div class='searchTools'></div>
-    <form class='userSearch'>
-        <fieldset>
-            <legend>Users</legend>
-            <label for="userName">Name: </label>
-            <input type='text' name='userName' placeholder='Search By Name'>
-            <label for="email">Email: </label>
-            <input type='text' name='email' placeholder='Search By Email'>
-            <label for="auth">Auth Level: </label>
-            <input type='text' name='auth' placeholder='Search By Authority'>
-            <input type='submit' value='Search'>
-        </fieldset>
-    </form>
+    <div class='searchTools'>
+        <form class='userSearch'>
+            <fieldset>
+                <legend>Search Users</legend>
+                <label>Name:
+                    <input type='text' name='userName' placeholder='Search By Name'></label>
+                <label>Email:
+                    <input type='text' name='email' placeholder='Search By Email'></label>
+                <label>Auth Level:
+                    <input type='text' name='auth' placeholder='Search By Authority'></label>
+                <input type='submit' value='Search'>
+            </fieldset>
+        </form>
 
-    <form class='productSearch'>
-        <fieldset>
-            <legend>Products</legend>
-            <label for="productName">Name: </label>
-            <input type='text' name='productName' placeholder='Search By Name'>
-            <label for="tags">Tags: </label>
-            <input type='text' name='tags' placeholder='Search By Tags'>
-            <input type='submit' value='Search'>
-        </fieldset>
-    </form>
+        <form class='productSearch'>
+            <fieldset>
+                <legend>Search Products</legend>
+                <label for="productName">Name:
+                    <input type='text' name='productName' placeholder='Search By Name'></label>
+                <label for="tags">Tags:
+                    <input type='text' name='tags' placeholder='Search By Tags'></label>
+                <input type='submit' value='Search'>
+            </fieldset>
+        </form>
 
-    <form class='eventSearch'>
-        <fieldset>
-            <legend>Events</legend>
-            <label for="eventName">Name: </label>
-            <input type='text' name='eventName' placeholder='Search By Name'>
-            <input type='submit' value='Search'>
-        </fieldset>
-    </form>
+        <form class='eventSearch'>
+            <fieldset>
+                <legend>Search Events</legend>
+                <label for="eventName">Name:
+                    <input type='text' name='eventName' placeholder='Search By Name'></label>
+                <input type='submit' value='Search'>
+            </fieldset>
+        </form>
+    </div>
 
     <form class='newEntry'>
         <fieldset>
@@ -64,7 +96,8 @@
 
 
     <script src="https://code.jquery.com/jquery-3.4.0.js"
-    integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="./scripts/index.js"></script>
     <script src="./scripts/admin-page.js"></script>
 </body>
 
