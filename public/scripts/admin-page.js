@@ -160,9 +160,11 @@ function displayUsers(productsJson) {
 function usersPrint(user, i) {
     $('.results').append(`
     <form class='userEdit' id='${i}'>
-        <p>Name: ${user.username}</p> <input type='text' name='editUName${i}' placeholder='New name here'>
-        <p>Email: ${user.email}</p><input type='text' name='editEmail${i}' placeholder='New price here'>
-        <p>Authority: ${user.authority}</p><input type='text' name='editAuthority${i}' placeholder='New auth: 1-3'>
+        <div class='user cssResult'>
+            <p>Name: ${user.username}</p> <input type='text' name='editUName${i}' placeholder='New name here'>
+            <p>Email: ${user.email}</p><input type='text' name='editEmail${i}' placeholder='New price here'>
+            <p>Authority: ${user.authority}</p><input type='text' name='editAuthority${i}' placeholder='New auth: 1-3'>
+        </div>
         <input type='submit' class='userClick' value='Update'>
         <input type='submit' class='userClick' value='Delete'>
     </form>`)
@@ -332,12 +334,14 @@ function productPrint(product, i) {
 
     $('.results').append(`
     <form class='productEdit' id='${i}'>
-        <p>Name: ${product.name}</p> <input type='text' name='editPName${i}' placeholder='New name here'>
-        <p>Tags:  ${tags.toString()}</p><input type='text' name='editTags${i}' placeholder='New tags here'>
-        <p>Price: ${product.price}</p><input type='text' name='editPrice${i}' placeholder='New price here'>
-        <img src = "${product.thumbnail}" alt = "Image of game"><input type='text' name='editThumbnail${i}' placeholder='New thumbnail here'>
-        <input type='submit' class='productClick' value='Update'>
-        <input type='submit' class='productClick' value='Delete'>
+        <div class='product cssResult'>
+            <p>Name: ${product.name}</p> <input type='text' name='editPName${i}' placeholder='New name here'>
+            <p>Tags:  ${tags.toString()}</p><input type='text' name='editTags${i}' placeholder='New tags here'>
+            <p>Price: ${product.price}</p><input type='text' name='editPrice${i}' placeholder='New price here'>
+            <img src = "${product.thumbnail}" alt = "Image of game"><input type='text' name='editThumbnail${i}' placeholder='New thumbnail here'>
+            <input type='submit' class='productClick' value='Update'>
+            <input type='submit' class='productClick' value='Delete'>
+        </div>
     </form>`)
 }
 
@@ -527,26 +531,28 @@ function eventPrint(event, index) {
 
     $('.results').append(`
     <form class='eventEdit' id='${index}'>
-        <p>Name: ${event.name}</p> <input type='text' name='editEName${index}' placeholder='New name here'>
-        <p>Date:  ${d.toDateString()}, ${d.getHours()}:${d.getMinutes()}</p>
-        <fieldset class='dateEntry'>
-            <legend>Date (month, day, year, time): </legend>
-                <label for=month${index}>Month</label>
-                <input type='text' name='month${index}' class='dateField required' placeholder='MM'><span class =''>/</span>
-                <label for=day${index}>Day</label>
-                <input type='text' name='day${index}' class='dateField required' placeholder='DD'><span class=''>/</span>
-                <label for=year${index}>Year</label>
-                <input type='text' name='year${index}' class='dateField required' placeholder='YYYY'><span class=''>/</span> 
-                <label for=hour${index}>Hour</label>
-                <input type='text' name='hour${index}' class='dateField required' placeholder='TT'><span class=''>:</span>
-                <label for=minute${index}>Minute</label>
-                <input type='text' name='minute${index}' class='dateField required ' placeholder='TT'>
-        </fieldset>
-        <p>Price: ${event.price}</p><input type='text' name='editPrice${index}' placeholder='New price here'>
-        <p>Attendance: ${event.attend.length}/${event.maxAttend}</p><input type='text' name='editMax${index}' placeholder='New max attend'>
-        <dl><dt>Attending Emails:</dt>${attending}</dl>
-        <p>Checked emails will be removed from list on update.</p>
-        <img src = "${event.thumbnail}" alt = "Image of event"><input type='text' name='editThumbnail${index}' placeholder='New thumbnail here'>
+        <div class='event cssResult'>
+            <p>Name: ${event.name}</p> <input type='text' name='editEName${index}' placeholder='New name here'>
+            <p>Date:  ${d.toDateString()}, ${d.getHours()}:${d.getMinutes()}</p>
+            <fieldset class='dateEntry'>
+                <legend>Date (month, day, year, time): </legend>
+                    <label for=month${index}>Month</label>
+                    <input type='text' name='month${index}' class='dateField required' placeholder='MM'><span class =''>/</span>
+                    <label for=day${index}>Day</label>
+                    <input type='text' name='day${index}' class='dateField required' placeholder='DD'><span class=''>/</span>
+                    <label for=year${index}>Year</label>
+                    <input type='text' name='year${index}' class='dateField required' placeholder='YYYY'><span class=''>/</span> 
+                    <label for=hour${index}>Hour</label>
+                    <input type='text' name='hour${index}' class='dateField required' placeholder='TT'><span class=''>:</span>
+                    <label for=minute${index}>Minute</label>
+                    <input type='text' name='minute${index}' class='dateField required ' placeholder='TT'>
+            </fieldset>
+            <p>Price: ${event.price}</p><input type='text' name='editPrice${index}' placeholder='New price here'>
+            <p>Attendance: ${event.attend.length}/${event.maxAttend}</p><input type='text' name='editMax${index}' placeholder='New max attend'>
+            <dl><dt>Attending Emails:</dt>${attending}</dl>
+            <p>Checked emails will be removed from list on update.</p>
+            <img src = "${event.thumbnail}" alt = "Image of event"><input type='text' name='editThumbnail${index}' placeholder='New thumbnail here'>
+        </div>
         <input type='submit' class='eventClick' value='Update'>
         <input type='submit' class='eventClick' value='Delete'>
     </form>`)
@@ -594,7 +600,7 @@ function watchButtons() {
                     <input type='text' name='price' class='required right' placeholder='price'>
                 </div>
                 <div class='overflowManage'>
-                    <label for=thumbnail>Thumbnail Image Link: </label>
+                    <label for=thumbnail>Thumbnail Link: </label>
                     <input type='text' name='thumbnail' class='required right' placeholder='photoplace.com/img e.g.'>
                 </div>
             </div>
@@ -631,7 +637,7 @@ function watchButtons() {
                     <input type='text' name='maxAttend' class='right' placeholder='maximum attendees'>
                 </div>
                 <div class='overflowManage'>
-                    <label for=thumbnail>Thumbnail Image Link: </label>
+                    <label for=thumbnail>Thumbnail Link: </label>
                     <input type='text' name='thumbnail' class='right' placeholder='photoplace.com/img e.g.'>
                 </div>
             </div>

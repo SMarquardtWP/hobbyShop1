@@ -35,19 +35,6 @@ Aluminum #D9D9D9
     width:45px;
 }
 
-.searchTools fieldset {
-    border: 2px solid #984B43;
-    margin-bottom: 15px;
-}
-
-.searchTools legend {
-    display: inline-block;
-}
-
-.searchTools label {
-    float: right;
-}
-
 .newEntry fieldset {
     text-align: center;
     border: 2px solid #EAC67A;
@@ -60,4 +47,8 @@ Aluminum #D9D9D9
 .newEntry button {
     margin-right: 10px;
     margin-left: 10px;
+}
+
+.newEntry button:focus {
+    background-color: #984B43;
 }

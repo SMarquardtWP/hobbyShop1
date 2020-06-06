@@ -2,20 +2,30 @@
 
 .productListing img{
     background-size: cover;
-    border-radius: 15px;
+    border-radius: 8px 24px;
     width: 100%;
-    float: right;
+    float:right;
 }
 
 .describe {
+    position: relative;
     float: left;
+    font-size: 12px;
 }
 
 .describe :first-child {
-    font-size: 30px;
+    font-size: 24px;
+}
+
+.describe :last-child {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 22px;
 }
 
 .product {
-    border: 1px solid black;
     overflow: hidden;
+    border-left: 14px solid #030708;
+    border-radius: 10px 30px;
 }

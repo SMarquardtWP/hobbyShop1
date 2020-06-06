@@ -13,12 +13,8 @@
 
 <body>
     <header>
-        <div class="logo">
-            <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
-                alt="A black and white logo of a crown and armor wearing woman.">
-            <h1>INC</h1>
-        </div>
-
+        <img src='./../images/adsBanner.jpg'
+            alt="A black and white logo of a crown and armor wearing woman, as well as advertisements for various card and tabletop game products.">
 
         <form class="login">
             <fieldset>
@@ -28,46 +24,45 @@
                     <input type="text" id="username" name="username" placeholder="Username">
                     <label for="password">Password: </label>
                     <input type="text" id="password" name="password" placeholder="Password">
+                    <input type="submit" class="logButton" value="Log In">
+                    <div class='userGreet'></div>
                 </div>
-                <input type="submit" value="Submit">
             </fieldset>
+            <a href="./sign-up.html">Create an Account</a>
             <p class="loginResponse"></p>
         </form>
 
 
         <nav>
-            <ul>
-                <li><a href="./index.html">Home</a></li>
-                <li><a href="./products.html" class='active'>Products</a></li>
-                <li><a href="./events.html">Events</a></li>
-                <li><a href="./contact.html">Contact Us</a></li>
-            </ul>
-            <a href="./sign-up.html">Create an Account</a>
+            <div>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./products.html" active='true'>Products</a></li>
+                    <li><a href="./events.html">Events</a></li>
+                    <li><a href="./contact.html">Contact Us</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
-    <h2>Products</h2>
+    <div class='centerScreen'>
+        <h2>Products</h2>
+        <div class='searchTools'>
+            <form class='search'>
+                <fieldset>
+                    <legend>Search Our Products!</legend>
+                    <div class='searchCenter'>
+                        <label>Name:
+                            <input type='text' name='pname' placeholder='Search By Name'></label>
+                        <label>Tags:
+                            <input type='text' name='tags' placeholder='Search By Tags'></label>
+                    </div>
+                    <input type='submit' value='Search'>
+                </fieldset>
+            </form>
+        </div>
 
-    <form class='search'>
-        <fieldset>
-            <legend>Search Our Products!</legend>
-            <label for='pname'>Name: </label>
-            <input type='text' name='pname' placeholder='Search By Name'>
-            <label for="tags">Tags: </label>
-            <input type='text' name='tags' placeholder='Search By Tags'>
-            <input type='submit' value='Search'>
-        </fieldset>
-    </form>
-
-    <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./products.html">Products</a></li>
-        <li><a href="./events.html">Events</a></li>
-        <li><a href="./contact.html">Contact Us</a></li>
-    </ul>
-
-    <div class="results productListing">
-
+        <div class="results productListing"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>

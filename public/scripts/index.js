@@ -2,18 +2,18 @@
 
 const BASE_URL = "DUMMY";
 
-function baseCall(url, mthd, successCallback, errorCallback, auth, body){
+function baseCall(url, mthd, successCallback, errorCallback, auth, body) {
     //sets up settings for call
     let settings = {
-        method : mthd,
-        headers : {
-            'Content-Type' : 'application/json'
+        method: mthd,
+        headers: {
+            'Content-Type': 'application/json'
         }
     }
-    if (body){
+    if (body) {
         settings.body = JSON.stringify(body);
     }
-    if (auth){
+    if (auth) {
         let token = localStorage.getItem('hobbyToken');
         settings.headers.Authorization = 'Bearer ' + token;
     }
@@ -21,7 +21,7 @@ function baseCall(url, mthd, successCallback, errorCallback, auth, body){
     //makes fetch call
     fetch(url, settings)
         .then(response => {
-            if(response.ok){
+            if (response.ok) {
                 return response.json();
             }
             throw new Error(response.statusText);
@@ -32,17 +32,19 @@ function baseCall(url, mthd, successCallback, errorCallback, auth, body){
         });
 }
 
-function errorLogin(err){
+function errorLogin(err) {
     console.log(err);
 }
 
-function successLogin(responseJSON){
+function successLogin(responseJSON) {
     $(".loginResponse").html(`You have logged in successfully`);
-    localStorage.setItem("hobbyToken", responseJSON.authToken);
+    localStorage.setItem('hobbyToken', responseJSON.authToken);
+    localStorage.setItem('hobbyName', responseJSON.username);
+    location.reload();
 }
 
-function watchLogin(){
-    $('.login').on('submit', function(event){
+function watchLogin() {
+    $('.login').on('submit', function (event) {
         event.preventDefault();
         let user = $('#username').val();
         let pass = $('#password').val();
@@ -51,8 +53,8 @@ function watchLogin(){
         console.log("username =" + user);
 
         let bodySettings = {
-            username : user,
-            password : pass
+            username: user,
+            password: pass
         }
 
         console.log(bodySettings);
@@ -61,4 +63,22 @@ function watchLogin(){
     });
 }
 
-watchLogin();
+function watchLogout() {
+    $('.login').on('click', '.logout', function (event) {
+        event.preventDefault();
+        localStorage.removeItem('hobbyToken');
+        localStorage.removeItem('hobbyName');
+        location.reload();
+    });
+}
+
+function initHobby() {
+    watchLogin();
+    watchLogout();
+    let logged = localStorage.getItem('hobbyName');
+    if (logged != null) {
+        $('.userGreet').html(`<p>Welcome, ${logged}!</p><p class='logout'>(Log Out)</p>`);
+    }
+}
+
+initHobby();

@@ -11,13 +11,15 @@ function displayProducts(productsJson){
         let tags = productsJson[i].tags;
 
         $('.productListing').append(`
-        <div class='product'>
+        <div class='product cssResult'>
             <div class='describe'>
                 <p>${productsJson[i].name}</p>
-                <p>Tags:  ${tags.toString()}</p>
-                <p>Price: $${productsJson[i].price}</p>
+                <p>${tags.toString()}</p>
+                <p>$${productsJson[i].price}</p>
             </div>
+            <div class="imgContainer">
             <img src = "${productsJson[i].thumbnail}" alt = "Image of game">
+            </div>
         </div>`
         )
     };

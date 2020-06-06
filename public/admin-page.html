@@ -5,46 +5,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>Game INC Admin Page</title>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
     <link rel="stylesheet" href="./stylesheets/index.css">
     <link rel="stylesheet" href="./stylesheets/admin.css">
 </head>
 
 <body>
     <header>
-        <header>
-            <div class="logo">
-                <h1>Game</h1><img src='./../images/hobbyShopIcon.jpg'
-                    alt="A black and white logo of a crown and armor wearing woman.">
-                <h1>INC</h1>
-            </div>
+        <img src='./../images/adsBanner.jpg'
+            alt="A black and white logo of a crown and armor wearing woman, as well as advertisements for various card and tabletop game products.">
 
 
-            <form class="login">
-                <fieldset>
-                    <legend>Sign-In</legend>
-                    <div class="loginStyle">
-                        <label for="username">Username: </label>
-                        <input type="text" id="username" name="username" placeholder="Username">
-                        <label for="password">Password: </label>
-                        <input type="text" id="password" name="password" placeholder="Password">
-                        <input type="submit" class="logButton" value="Log In">
-                        <input type="submit" class="logButton" value="Log Out">
-                    </div>
-                </fieldset>
-                <p class="loginResponse"></p>
-            </form>
+
+        <form class="login">
+            <fieldset>
+                <legend>Sign-In</legend>
+                <div class="loginStyle">
+                    <label for="username">Username: </label>
+                    <input type="text" id="username" name="username" placeholder="Username">
+                    <label for="password">Password: </label>
+                    <input type="text" id="password" name="password" placeholder="Password">
+                    <input type="submit" class="logButton" value="Log In">
+                    <input type="submit" class="logButton logout" value="Log Out">
+                </div>
+            </fieldset>
+            <p class="loginResponse"></p>
+        </form>
 
 
-            <nav>
+        <nav>
+            <div>
                 <ul>
                     <li><a href="./index.html">Home</a></li>
-                    <li><a href="./products.html" class='active'>Products</a></li>
+                    <li><a href="./products.html">Products</a></li>
                     <li><a href="./events.html">Events</a></li>
                     <li><a href="./contact.html">Contact Us</a></li>
                 </ul>
                 <a href="./sign-up.html">Create an Account</a>
-            </nav>
-        </header>
+            </div>
+        </nav>
     </header>
     <div class='searchTools'>
         <form class='userSearch'>
@@ -93,6 +92,10 @@
     </form>
 
     <div class='results'></div>
+
+    <footer><img src='./../images/customerBanner.jpg'
+            alt="A black and white logo of a crown and armor wearing woman, as well as advertisements for various card and tabletop game products.">
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.4.0.js"
